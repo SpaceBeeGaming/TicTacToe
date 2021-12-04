@@ -1,12 +1,24 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<OutputType>Exe</OutputType>
+		<TargetFramework>net6.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		<StartupObject>TicTacToe.Program</StartupObject>
+		<ProduceReferenceAssembly>False</ProduceReferenceAssembly>
+		<Platforms>AnyCPU;x64;x86</Platforms>
+	</PropertyGroup>
 
-  <PropertyGroup>
-    <OutputType>Exe</OutputType>
-    <TargetFramework>net6.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-    <StartupObject>TicTacToe.Program</StartupObject>
-    <ProduceReferenceAssembly>False</ProduceReferenceAssembly>
-  </PropertyGroup>
-
+	<ItemGroup Condition=" '$(Platform)' == 'x64' ">
+		<ContentWithTargetPath Include="Led\lib\x64\LogitechLedEnginesWrapper.dll">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+			<TargetPath>LogitechLedEnginesWrapper.dll</TargetPath>
+		</ContentWithTargetPath>
+	</ItemGroup>
+	<ItemGroup Condition=" '$(Platform)' == 'x86' ">
+		<ContentWithTargetPath Include="Led\lib\x86\LogitechLedEnginesWrapper.dll">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+			<TargetPath>LogitechLedEnginesWrapper.dll</TargetPath>
+		</ContentWithTargetPath>
+	</ItemGroup>
 </Project>

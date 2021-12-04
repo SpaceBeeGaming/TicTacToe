@@ -74,15 +74,15 @@ public class Game
 
             result = key switch
             {
-                ConsoleKey.NumPad7 => Board.DrawX(Boxes.B1),
-                ConsoleKey.NumPad8 => Board.DrawX(Boxes.B2),
-                ConsoleKey.NumPad9 => Board.DrawX(Boxes.B3),
-                ConsoleKey.NumPad4 => Board.DrawX(Boxes.B4),
-                ConsoleKey.NumPad5 => Board.DrawX(Boxes.B5),
-                ConsoleKey.NumPad6 => Board.DrawX(Boxes.B6),
-                ConsoleKey.NumPad1 => Board.DrawX(Boxes.B7),
-                ConsoleKey.NumPad2 => Board.DrawX(Boxes.B8),
-                ConsoleKey.NumPad3 => Board.DrawX(Boxes.B9),
+                ConsoleKey.NumPad7 or ConsoleKey.D1 => Board.DrawX(Boxes.B1),
+                ConsoleKey.NumPad8 or ConsoleKey.D2 => Board.DrawX(Boxes.B2),
+                ConsoleKey.NumPad9 or ConsoleKey.D3 => Board.DrawX(Boxes.B3),
+                ConsoleKey.NumPad4 or ConsoleKey.D4 => Board.DrawX(Boxes.B4),
+                ConsoleKey.NumPad5 or ConsoleKey.D5 => Board.DrawX(Boxes.B5),
+                ConsoleKey.NumPad6 or ConsoleKey.D6 => Board.DrawX(Boxes.B6),
+                ConsoleKey.NumPad1 or ConsoleKey.D7 => Board.DrawX(Boxes.B7),
+                ConsoleKey.NumPad2 or ConsoleKey.D8 => Board.DrawX(Boxes.B8),
+                ConsoleKey.NumPad3 or ConsoleKey.D9 => Board.DrawX(Boxes.B9),
                 _ => false,
             };
         } while (result is false);

@@ -1,4 +1,5 @@
 ﻿using TicTacToe.Board;
+using TicTacToe.Led;
 
 namespace TicTacToe;
 
@@ -17,6 +18,7 @@ public class Game
     public void Setup()
     {
         Board.DrawBoard();
+        LedManager.SetDark();
     }
 
     public void Play()
@@ -48,6 +50,7 @@ public class Game
 
     public void AnnounceWinner()
     {
+        LedManager.FlashEnter(Winner);
         switch (Winner)
         {
             case GameOverType.Tie:

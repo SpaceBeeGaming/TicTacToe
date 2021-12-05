@@ -1,4 +1,6 @@
-﻿namespace TicTacToe;
+﻿using TicTacToe.Led;
+
+namespace TicTacToe;
 
 internal class Program
 {
@@ -6,6 +8,9 @@ internal class Program
 
     private static void Main()
     {
+
+        LedManager.Init();
+
         bool play;
         do
         {
@@ -13,6 +18,8 @@ internal class Program
 
         } while (play);
 
+        LedManager.Shutdown();
+        
         Console.WriteLine("Press any key to exit...");
         Console.ReadKey(true);
     }
@@ -27,6 +34,7 @@ internal class Program
         Console.WriteLine("\nPress <Enter> to play again.");
         Console.WriteLine("Or anything else to exit.\n");
         var key = Console.ReadKey(true).Key;
+        LedManager.StopEffectOnKey(KeyNames.NUM_ENTER);
         if (key == ConsoleKey.Enter)
         {
             return true;

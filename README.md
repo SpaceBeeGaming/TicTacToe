@@ -7,3 +7,5 @@ Should run pretty much everywhere where there is a terminal and a numpad availab
 Requires .NET 6.
 
 On Windows there is integration with the logitech lighting api.
+
+![image](https://i.imgur.com/UlbOGsC.png)

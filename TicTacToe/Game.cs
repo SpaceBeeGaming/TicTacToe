@@ -1,4 +1,5 @@
 ﻿using TicTacToe.Board;
+using TicTacToe.Led;
 
 namespace TicTacToe;
 
@@ -44,6 +45,8 @@ public class Game
             turnCounter++;
 
         } while (true);
+
+        LedManager.RestoreLighting();
     }
 
     public void AnnounceWinner()

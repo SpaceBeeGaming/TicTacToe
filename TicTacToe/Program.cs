@@ -1,4 +1,6 @@
-﻿namespace TicTacToe;
+﻿using TicTacToe.Led;
+
+namespace TicTacToe;
 
 internal class Program
 {
@@ -6,12 +8,17 @@ internal class Program
 
     private static void Main()
     {
+
+        LedManager.Init();
+
         bool play;
         do
         {
             play = RunGame();
 
         } while (play);
+
+        LedManager.Shutdown();
 #if DEBUG
         Console.ReadLine();
 #endif

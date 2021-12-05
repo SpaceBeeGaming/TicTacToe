@@ -1,8 +1,9 @@
-﻿using System.Runtime.InteropServices;
+﻿using System.Drawing;
+using System.Runtime.InteropServices;
 
 namespace TicTacToe.Led;
 
-internal class LogiLED
+internal static class LogiLED
 {
     //LED SDK
     private const int LOGI_DEVICETYPE_MONOCHROME_ORD = 0;
@@ -68,6 +69,9 @@ internal class LogiLED
 
     [DllImport("LogitechLedEnginesWrapper", CallingConvention = CallingConvention.Cdecl, EntryPoint = "LogiLedSetLightingForKeyWithKeyName")]
     public static extern bool SetLightingForKeyWithKeyName(KeyNames keyCode, int redPercentage, int greenPercentage, int bluePercentage);
+
+    public static bool SetLightingForKeyWithKeyName(KeyNames keyCode, Color color) => 
+        SetLightingForKeyWithKeyName(keyCode, (int)Math.Round(color.R / 255.0 * 100), (int)Math.Round(color.G / 255.0 * 100), (int)Math.Round(color.B / 255.0 * 100));
 
     [DllImport("LogitechLedEnginesWrapper", CallingConvention = CallingConvention.Cdecl, EntryPoint = "LogiLedSaveLightingForKey")]
     public static extern bool SaveLightingForKey(KeyNames keyName);

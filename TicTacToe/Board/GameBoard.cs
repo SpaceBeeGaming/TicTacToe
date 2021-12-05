@@ -1,4 +1,6 @@
-﻿namespace TicTacToe.Board;
+﻿using TicTacToe.Led;
+
+namespace TicTacToe.Board;
 
 public partial class GameBoard
 {
@@ -91,6 +93,7 @@ public partial class GameBoard
 
         var oldPos = Console.SetCursorPosition(_boardOffset, box.Location);
         System.Console.Write(symbol);
+        LedManager.SetBox(box,this);
         box.Symbol = symbol;
 
         Console.SetCursorPosition(oldPos);
@@ -128,7 +131,7 @@ public partial class GameBoard
     public IList<Line> GetDangerousLines() => GetLines('X');
 
     public Line? GetWinningLine() => GetLines('O', true).FirstOrDefault();
-    
+
     public Box GetBox(Boxes box) => box switch
     {
         Boxes.B1 => _box1,
@@ -142,6 +145,50 @@ public partial class GameBoard
         Boxes.B9 => _box9,
         _ => throw new InvalidOperationException("Cannot convert null into a Box."),
     };
+
+    public KeyNames GetKeyNameFromBox(Box box)
+    {
+        if (box == _box1)
+        {
+            return KeyNames.NumPad7;
+        }
+        else if (box == _box2)
+        {
+            return KeyNames.NumPad8;
+        }
+        else if (box == _box3)
+        {
+            return KeyNames.NumPad9;
+        }
+        else if (box == _box4)
+        {
+            return KeyNames.NumPad4;
+        }
+        else if (box == _box5)
+        {
+            return KeyNames.NumPad5;
+        }
+        else if (box == _box6)
+        {
+            return KeyNames.NumPad6;
+        }
+        else if (box == _box7)
+        {
+            return KeyNames.NumPad1;
+        }
+        else if (box == _box8)
+        {
+            return KeyNames.NumPad2;
+        }
+        else if (box == _box9)
+        {
+            return KeyNames.NumPad3;
+        }
+        else
+        {
+            throw new InvalidOperationException("Box not known.");
+        }
+    }
 
     private IList<Line> GetLines(char symbol, bool shortCircuit = false)
     {

@@ -19,9 +19,9 @@ internal class Program
         } while (play);
 
         LedManager.Shutdown();
-#if DEBUG
-        Console.ReadLine();
-#endif
+        
+        Console.WriteLine("Press any key to exit...");
+        Console.ReadKey(true);
     }
 
     private static bool RunGame()

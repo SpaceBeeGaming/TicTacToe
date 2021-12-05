@@ -1,4 +1,6 @@
-﻿using TicTacToe.Board;
+﻿using System.Drawing;
+
+using TicTacToe.Board;
 
 namespace TicTacToe.Led;
 
@@ -21,6 +23,41 @@ internal class LedManager
         if (IsWindows)
         {
             LogiLED.RestoreLighting();
+        }
+    }
+
+    public static void SetDark()
+    {
+        if (IsWindows)
+        {
+            LogiLED.SetLighting(0, 0, 0);
+        }
+    }
+
+    public static void FlashEnter(GameOverType gameOverType)
+    {
+        if (IsWindows)
+        {
+            switch (gameOverType)
+            {
+                case GameOverType.Tie:
+                    LogiLED.FlashSingleKey(KeyNames.NUM_ENTER, Color.White, LogiLED.LOGI_LED_DURATION_INFINITE, 500);
+                    break;
+                case GameOverType.X:
+                    LogiLED.FlashSingleKey(KeyNames.NUM_ENTER, Color.Blue, LogiLED.LOGI_LED_DURATION_INFINITE, 500);
+                    break;
+                case GameOverType.O:
+                    LogiLED.FlashSingleKey(KeyNames.NUM_ENTER, Color.Red, LogiLED.LOGI_LED_DURATION_INFINITE, 500);
+                    break;
+            }
+        }
+    }
+
+    public static void StopEffectOnKey(KeyNames key)
+    {
+        if (IsWindows)
+        {
+            LogiLED.StopEffectsOnKey(key);
         }
     }
 

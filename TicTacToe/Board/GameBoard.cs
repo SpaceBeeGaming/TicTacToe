@@ -65,6 +65,11 @@ public partial class GameBoard
             _col1, _col2, _col3,
             _diag1, _diag2
         };
+
+        foreach (var box in _boxes)
+        {
+            LedManager.SetBox(box, this);
+        }
     }
 
     public IEnumerable<Box> GetEmptyBoxes() => _boxes.Where(box => box.IsOccupied is false);
@@ -91,11 +96,11 @@ public partial class GameBoard
             return false;
         }
 
+        box.Symbol = symbol;
+        LedManager.SetBox(box, this);
+        
         var oldPos = Console.SetCursorPosition(_boardOffset, box.Location);
         System.Console.Write(symbol);
-        LedManager.SetBox(box,this);
-        box.Symbol = symbol;
-
         Console.SetCursorPosition(oldPos);
         return true;
     }
@@ -146,6 +151,7 @@ public partial class GameBoard
         _ => throw new InvalidOperationException("Cannot convert null into a Box."),
     };
 
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0046:Convert to conditional expression", Justification = "This would make the result quite unreadable.")]
     public KeyNames GetKeyNameFromBox(Box box)
     {
         if (box == _box1)

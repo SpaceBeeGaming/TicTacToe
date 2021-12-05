@@ -70,7 +70,7 @@ internal static class LogiLED
     [DllImport("LogitechLedEnginesWrapper", CallingConvention = CallingConvention.Cdecl, EntryPoint = "LogiLedSetLightingForKeyWithKeyName")]
     public static extern bool SetLightingForKeyWithKeyName(KeyNames keyCode, int redPercentage, int greenPercentage, int bluePercentage);
 
-    public static bool SetLightingForKeyWithKeyName(KeyNames keyCode, Color color) => 
+    public static bool SetLightingForKeyWithKeyName(KeyNames keyCode, Color color) =>
         SetLightingForKeyWithKeyName(keyCode, (int)Math.Round(color.R / 255.0 * 100), (int)Math.Round(color.G / 255.0 * 100), (int)Math.Round(color.B / 255.0 * 100));
 
     [DllImport("LogitechLedEnginesWrapper", CallingConvention = CallingConvention.Cdecl, EntryPoint = "LogiLedSaveLightingForKey")]
@@ -78,6 +78,8 @@ internal static class LogiLED
 
     [DllImport("LogitechLedEnginesWrapper", CallingConvention = CallingConvention.Cdecl, EntryPoint = "LogiLedRestoreLightingForKey")]
     public static extern bool RestoreLightingForKey(KeyNames keyName);
+    public static void FlashSingleKey(KeyNames keyName, Color color, int msDuration, int msInterval) =>
+        FlashSingleKey(keyName, (int)Math.Round(color.R / 255.0 * 100), (int)Math.Round(color.G / 255.0 * 100), (int)Math.Round(color.B / 255.0 * 100), msDuration, msInterval);
 
     [DllImport("LogitechLedEnginesWrapper", CallingConvention = CallingConvention.Cdecl, EntryPoint = "LogiLedFlashSingleKey")]
     public static extern bool FlashSingleKey(KeyNames keyName, int redPercentage, int greenPercentage, int bluePercentage, int msDuration, int msInterval);

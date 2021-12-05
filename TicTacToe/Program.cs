@@ -34,6 +34,7 @@ internal class Program
         Console.WriteLine("\nPress <Enter> to play again.");
         Console.WriteLine("Or anything else to exit.\n");
         var key = Console.ReadKey(true).Key;
+        LedManager.StopEffectOnKey(KeyNames.NUM_ENTER);
         if (key == ConsoleKey.Enter)
         {
             return true;

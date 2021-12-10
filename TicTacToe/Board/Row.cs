@@ -1,8 +1,0 @@
-﻿namespace TicTacToe.Board;
-
-public class Row : Line
-{
-    public Row(Box box1, Box box2, Box box3) : base(box1, box2, box3)
-    {
-    }
-}

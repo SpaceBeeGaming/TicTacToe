@@ -29,16 +29,16 @@ public partial class GameBoard
     private readonly Box _box8 = new(6, 5);
     private readonly Box _box9 = new(10, 5);
 
-    private readonly Row _row1;
-    private readonly Row _row2;
-    private readonly Row _row3;
+    private readonly Line _row1;
+    private readonly Line _row2;
+    private readonly Line _row3;
 
-    private readonly Column _col1;
-    private readonly Column _col2;
-    private readonly Column _col3;
+    private readonly Line _col1;
+    private readonly Line _col2;
+    private readonly Line _col3;
 
-    private readonly Diagonal _diag1;
-    private readonly Diagonal _diag2;
+    private readonly Line _diag1;
+    private readonly Line _diag2;
     #endregion
 
     public GameBoard()
@@ -48,16 +48,16 @@ public partial class GameBoard
             _box1, _box2, _box3, _box4, _box5, _box6, _box7, _box8, _box9
         };
 
-        _row1 = new Row(_box1, _box2, _box3);
-        _row2 = new Row(_box4, _box5, _box6);
-        _row3 = new Row(_box7, _box8, _box9);
+        _row1 = new Line(_box1, _box2, _box3);
+        _row2 = new Line(_box4, _box5, _box6);
+        _row3 = new Line(_box7, _box8, _box9);
 
-        _col1 = new Column(_box1, _box4, _box7);
-        _col2 = new Column(_box2, _box5, _box8);
-        _col3 = new Column(_box3, _box6, _box9);
+        _col1 = new Line(_box1, _box4, _box7);
+        _col2 = new Line(_box2, _box5, _box8);
+        _col3 = new Line(_box3, _box6, _box9);
 
-        _diag1 = new Diagonal(_box1, _box5, _box9);
-        _diag2 = new Diagonal(_box3, _box5, _box7);
+        _diag1 = new Line(_box1, _box5, _box9);
+        _diag2 = new Line(_box3, _box5, _box7);
 
         _lines = new List<Line>()
         {

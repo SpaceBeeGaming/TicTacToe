@@ -1,15 +1,15 @@
 ﻿namespace TicTacToe.Board;
 
-public abstract class Line
+public class Line
 {
     public IEnumerable<Box> Boxes { get; set; }
 
-    protected Line(Box box1, Box box2, Box box3)
+    public Line(Box box1, Box box2, Box box3)
     {
         Boxes = new List<Box>()
-            {
-                box1, box2, box3
-            };
+        {
+            box1, box2, box3
+        };
     }
 
     public bool IsFull => Boxes.All(box => box.IsOccupied is true);

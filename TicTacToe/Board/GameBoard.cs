@@ -65,11 +65,6 @@ public partial class GameBoard
             _col1, _col2, _col3,
             _diag1, _diag2
         };
-
-        foreach (var box in _boxes)
-        {
-            LedManager.SetBox(box, this);
-        }
     }
 
     public IEnumerable<Box> GetEmptyBoxes() => _boxes.Where(box => box.IsOccupied is false);

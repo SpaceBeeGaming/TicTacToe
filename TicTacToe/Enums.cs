@@ -6,3 +6,9 @@ public enum GameOverType
     X,
     O
 }
+
+public enum Players
+{
+    X,
+    O
+}

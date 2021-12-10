@@ -4,6 +4,7 @@ namespace TicTacToe.Board;
 
 public partial class GameBoard
 {
+    #region Private Fields
     private (int x, int y) _boardOffset;
     private readonly string[] _grid = new string[]
     {
@@ -18,7 +19,6 @@ public partial class GameBoard
     private readonly IEnumerable<Box> _boxes;
     private readonly IEnumerable<Line> _lines;
 
-    #region Properties
     private readonly Box _box1 = new(2, 1);
     private readonly Box _box2 = new(6, 1);
     private readonly Box _box3 = new(10, 1);
@@ -83,59 +83,59 @@ public partial class GameBoard
         }
     }
 
-    public bool DrawX(Box box) => DrawSymbol(box, 'X');
+    public bool DrawX(Box box) => DrawSymbol(box, Players.X);
 
     public bool DrawX(Boxes box) => DrawX(GetBox(box));
 
-    public bool DrawO(Box box) => DrawSymbol(box, 'O');
+    public bool DrawO(Box box) => DrawSymbol(box, Players.O);
 
-    private bool DrawSymbol(Box box, char symbol)
+    private bool DrawSymbol(Box box, Players player)
     {
         if (box.IsOccupied)
         {
             return false;
         }
 
-        box.Symbol = symbol;
+        box.Player = player;
         LedManager.SetBox(box, this);
-        
+
         var oldPos = Console.SetCursorPosition(_boardOffset, box.Location);
-        System.Console.Write(symbol);
+        System.Console.Write(player);
         Console.SetCursorPosition(oldPos);
         return true;
     }
 
-    public (bool gameOver, char? winner) CheckForWinner()
+    public (bool gameOver, Players? winner) CheckForWinner()
     {
         // Iterate over all the rows, columns and diagonals.
         foreach (var line in _lines)
         {
             // Check if the line is all 'X'.
-            if (line.Boxes.All(box => box.Symbol == 'X') is true)
+            if (line.Boxes.All(box => box.Player == Players.X) is true)
             {
-                return (true, 'X');
+                return (true, Players.X);
             }
             // Check if the line is all 'O'.
-            else if (line.Boxes.All(box => box.Symbol == 'O') is true)
+            else if (line.Boxes.All(box => box.Player == Players.O) is true)
             {
-                return (true, 'O');
+                return (true, Players.O);
             }
         }
 
         // Check if the grid is full.
         if (GetEmptyBoxes().Any() is false)
         {
-            // We have a tie since the grid is full and we have no matches.
+            // We have a tie since the grid is full and we have no winners.
             return (true, null);
         }
 
-        // Returns when there are empty boxes.
+        // Returns when there are empty boxes and no winners.
         return (false, null);
     }
 
-    public IList<Line> GetDangerousLines() => GetLines('X');
+    public IList<Line> GetDangerousLines(Players player) => GetLines(Game.GetOpposingPlayer(player), 2);
 
-    public Line? GetWinningLine() => GetLines('O', true).FirstOrDefault();
+    public Line? GetWinningLine(Players player) => GetLines(player, 2, true).FirstOrDefault();
 
     public Box GetBox(Boxes box) => box switch
     {
@@ -154,6 +154,7 @@ public partial class GameBoard
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0046:Convert to conditional expression", Justification = "This would make the result quite unreadable.")]
     public KeyNames GetKeyNameFromBox(Box box)
     {
+        // Maps the boxes to their respective keys on the NumPad.
         if (box == _box1)
         {
             return KeyNames.NumPad7;
@@ -192,11 +193,11 @@ public partial class GameBoard
         }
         else
         {
-            throw new InvalidOperationException("Box not known.");
+            throw new InvalidOperationException("Unknown Box known.");
         }
     }
 
-    private IList<Line> GetLines(char symbol, bool shortCircuit = false)
+    private IList<Line> GetLines(Players player, int numHits, bool shortCircuit = false)
     {
         List<Line> lines = new();
         foreach (var line in _lines)
@@ -206,7 +207,7 @@ public partial class GameBoard
                 continue;
             }
 
-            if (line.Boxes.Count(box => box.Symbol == symbol) is 2)
+            if (line.Boxes.Count(box => box.Player == player) == numHits)
             {
                 lines.Add(line);
                 if (shortCircuit)

@@ -24,7 +24,7 @@ public class Game
     public void Play()
     {
         int turnCounter = Random.Shared.Next(0, 2);
-        (bool gameOver, char? winner) status;
+        (bool gameOver, Players? winner) status;
         do
         {
             status = Board.CheckForWinner();
@@ -62,7 +62,7 @@ public class Game
                 Statistics.Wins++;
                 break;
             case GameOverType.O:
-                Console.WriteLine("You lost!");
+                Console.WriteLine("You lose!");
                 Statistics.Losses++;
                 break;
         }
@@ -91,10 +91,11 @@ public class Game
         } while (result is false);
     }
 
+    // Opponent is 'O'
     private void OpponentTurn()
     {
         Box? idealBox = null;
-        var winningLine = Board.GetWinningLine();
+        var winningLine = Board.GetWinningLine(Players.O);
         if (winningLine is not null)
         {
             idealBox = winningLine.GetEmptyBoxes().FirstOrDefault();
@@ -102,7 +103,7 @@ public class Game
 
         if (idealBox is null)
         {
-            var dangerousLines = Board.GetDangerousLines();
+            var dangerousLines = Board.GetDangerousLines(Players.O);
 
             if (dangerousLines.Count is not 0)
             {
@@ -128,19 +129,19 @@ public class Game
         Board.DrawO(idealBox);
     }
 
-    private void SetGameOverType(char? winner)
-    {
-        switch (winner)
+    private void SetGameOverType(Players? winner) =>
+        Winner = winner switch
         {
-            case 'X':
-                Winner = GameOverType.X;
-                break;
-            case 'O':
-                Winner = GameOverType.O;
-                break;
-            case null:
-                Winner = GameOverType.Tie;
-                break;
-        }
-    }
+            Players.X => GameOverType.X,
+            Players.O => GameOverType.O,
+            _ => GameOverType.Tie,
+        };
+
+    public static Players GetOpposingPlayer(Players player) =>
+        player switch
+        {
+            Players.X => Players.O,
+            Players.O => Players.X,
+            _ => throw new NotImplementedException()
+        };
 }

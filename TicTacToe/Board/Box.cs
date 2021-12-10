@@ -8,14 +8,13 @@ public class Box : IEquatable<Box>
 
     public bool IsOccupied { get; set; }
 
-    private char? _symbol;
-
-    public char? Symbol
+    private Players? _player;
+    public Players? Player
     {
-        get => _symbol;
+        get => _player;
         set
         {
-            _symbol = value is 'X' or 'O' ? value : throw new InvalidOperationException("Value must be either 'X' or 'O'.");
+            _player = value;
             IsOccupied = true;
         }
     }
@@ -28,10 +27,10 @@ public class Box : IEquatable<Box>
     public bool Equals(Box? other) =>
         other is not null
         && Location.Equals(other.Location)
-        && Symbol.Equals(other.Symbol)
+        && Player.Equals(other.Player)
         && IsOccupied.Equals(other.IsOccupied);
 
     public override bool Equals(object? obj) => Equals(obj as Box);
 
-    public override int GetHashCode() => HashCode.Combine(Location, Symbol, IsOccupied);
+    public override int GetHashCode() => HashCode.Combine(Location, Player, IsOccupied);
 }

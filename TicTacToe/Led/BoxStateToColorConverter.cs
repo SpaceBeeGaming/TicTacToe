@@ -6,14 +6,15 @@ namespace TicTacToe.Led;
 
 public class BoxStateToColorConverter
 {
-    private static readonly Color _enemyColor = Color.Red;
-    private static readonly Color _playerColor = Color.Blue;
+    private static readonly Color _oColor = Color.Red;
+    private static readonly Color _xColor = Color.Blue;
     private static readonly Color _emptyColor = Color.Black;
 
     public static Color GetColorForBox(Box box) =>
-        box.Symbol is 'X'
-        ? _playerColor
-        : box.Symbol is 'O'
-        ? _enemyColor
-        : _emptyColor;
+        box.Player switch
+        {
+            Players.X => _xColor,
+            Players.O => _oColor,
+            _ => _emptyColor,
+        };
 }

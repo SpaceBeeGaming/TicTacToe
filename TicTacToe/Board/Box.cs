@@ -6,18 +6,9 @@ public class Box : IEquatable<Box>
 {
     public Point Location { get; }
 
-    public bool IsOccupied { get; set; }
+    public bool IsOccupied => Player.HasValue;
 
-    private Players? _player;
-    public Players? Player
-    {
-        get => _player;
-        set
-        {
-            _player = value;
-            IsOccupied = true;
-        }
-    }
+    public Players? Player { get; set; }
 
     public Box(int x, int y)
     {
@@ -27,10 +18,9 @@ public class Box : IEquatable<Box>
     public bool Equals(Box? other) =>
         other is not null
         && Location.Equals(other.Location)
-        && Player.Equals(other.Player)
-        && IsOccupied.Equals(other.IsOccupied);
+        && Player.Equals(other.Player);
 
     public override bool Equals(object? obj) => Equals(obj as Box);
 
-    public override int GetHashCode() => HashCode.Combine(Location, Player, IsOccupied);
+    public override int GetHashCode() => HashCode.Combine(Location, Player);
 }

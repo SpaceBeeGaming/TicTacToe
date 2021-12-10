@@ -40,4 +40,9 @@
 			<TargetPath>LogitechLedEnginesWrapper.dll</TargetPath>
 		</ContentWithTargetPath>
 	</ItemGroup>
+
+	<Target Name="PostPublish" AfterTargets="Publish">
+		<Move Condition="'$(IsWindows)'=='true'" SourceFiles="bin\Release\net6.0\publish\$(RuntimeIdentifier)\TicTacToe.exe" DestinationFiles="bin\Publish\Tictactoe-$(RuntimeIdentifier).exe"/>
+		<Move Condition="'$(IsWindows)'!='true'" SourceFiles="bin\Release\net6.0\publish\$(RuntimeIdentifier)\TicTacToe" DestinationFiles="bin\Publish\Tictactoe-$(RuntimeIdentifier)"/>
+	</Target>
 </Project>

@@ -9,30 +9,42 @@
 		<IncludeNativeLibrariesForSelfExtract>true</IncludeNativeLibrariesForSelfExtract>
 		<Platforms>x64;x86</Platforms>
 		<DebugType>embedded</DebugType>
-	</PropertyGroup>
-	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-	  <DefineConstants>$(DefineConstants)TRACE</DefineConstants>
-	</PropertyGroup>
-	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-	  <DefineConstants>$(DefineConstants)TRACE</DefineConstants>
-	</PropertyGroup>
-	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x86'">
-	  <DefineConstants>$(DefineConstants)TRACE</DefineConstants>
-	</PropertyGroup>
-	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x86'">
-	  <DefineConstants>$(DefineConstants)TRACE</DefineConstants>
+		<RuntimeIdentifiers>win-x86;win-x64;linux-x64;osx-x64</RuntimeIdentifiers>
+		<PublishSingleFile>true</PublishSingleFile>
+		<PublishTrimmed>true</PublishTrimmed>
+		<!--HACK: Is there a better way?-->
+		<IsWindows Condition="'$(RuntimeIdentifier)' == 'win-x64' or '$(RuntimeIdentifier)' == 'win-x86' or '$(Configuration)' == 'Debug'">true</IsWindows>
+		<DefineConstants Condition="'$(IsWindows)'== 'true'">$(DefineConstants);WINDOWS</DefineConstants>
 	</PropertyGroup>
 
-	<ItemGroup Condition=" '$(Platform)' == 'x64' ">
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+		<DefineConstants>$(DefineConstants);TRACE</DefineConstants>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+		<DefineConstants>$(DefineConstants);TRACE</DefineConstants>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x86'">
+		<DefineConstants>$(DefineConstants);TRACE</DefineConstants>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x86'">
+		<DefineConstants>$(DefineConstants);TRACE</DefineConstants>
+	</PropertyGroup>
+
+	<ItemGroup Condition="'$(Platform)' == 'x64' and '$(IsWindows)'=='true'">
 		<ContentWithTargetPath Include="Led\lib\x64\LogitechLedEnginesWrapper.dll">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 			<TargetPath>LogitechLedEnginesWrapper.dll</TargetPath>
 		</ContentWithTargetPath>
 	</ItemGroup>
-	<ItemGroup Condition=" '$(Platform)' == 'x86' ">
+	<ItemGroup Condition=" '$(Platform)' == 'x86' and '$(IsWindows)'=='true'">
 		<ContentWithTargetPath Include="Led\lib\x86\LogitechLedEnginesWrapper.dll">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 			<TargetPath>LogitechLedEnginesWrapper.dll</TargetPath>
 		</ContentWithTargetPath>
 	</ItemGroup>
+
+	<Target Name="PostPublish" AfterTargets="Publish">
+		<Move Condition="'$(IsWindows)'=='true'" SourceFiles="bin\Release\net6.0\publish\$(RuntimeIdentifier)\TicTacToe.exe" DestinationFiles="bin\Publish\Tictactoe-$(RuntimeIdentifier).exe"/>
+		<Move Condition="'$(IsWindows)'!='true'" SourceFiles="bin\Release\net6.0\publish\$(RuntimeIdentifier)\TicTacToe" DestinationFiles="bin\Publish\Tictactoe-$(RuntimeIdentifier)"/>
+	</Target>
 </Project>

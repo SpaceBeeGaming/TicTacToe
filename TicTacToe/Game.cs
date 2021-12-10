@@ -22,7 +22,7 @@ public class Game
     {
         _board.DrawBoard();
         LedManager.SetDark();
-        HumanPlayer = (Players)Random.Shared.Next(0, 2);
+        HumanPlayer = (Players)Random.Shared.Next(2);
         Console.WriteLine($"You are: {HumanPlayer}");
     }
 
@@ -42,7 +42,7 @@ public class Game
                 SetGameOverType(status.winner);
                 break;
             }
-
+            
             if (turnCounter % 2 is 0)
             {
                 PlayerTurn(HumanPlayer);
@@ -60,21 +60,23 @@ public class Game
     public void AnnounceWinner()
     {
         LedManager.FlashEnter(Winner);
-        switch (Winner)
+        if (Winner is GameOverType.Tie)
         {
-            case GameOverType.Tie:
-                Console.WriteLine("Tie!");
-                _statistics.Ties++;
-                break;
-            case GameOverType.X:
-                Console.WriteLine($"You win!");
-                _statistics.Wins++;
-                break;
-            case GameOverType.O:
-                Console.WriteLine("You lose!");
-                _statistics.Losses++;
-                break;
+            Console.WriteLine("Tie!");
+            _statistics.Ties++;
         }
+        else if (PlayerIsWinner())
+        {
+            Console.WriteLine("You win!");
+            _statistics.Wins++;
+        }
+        else
+        {
+            Console.WriteLine("You lose!");
+            _statistics.Losses++;
+        }
+
+        bool PlayerIsWinner() => (Winner is GameOverType.X && HumanPlayer is Players.X) || (Winner is GameOverType.O && HumanPlayer is Players.O);
     }
 
     private void PlayerTurn(Players player)
@@ -130,7 +132,7 @@ public class Game
         if (idealBox is null)
         {
             var boxes = _board.GetEmptyBoxes().ToList();
-            idealBox = boxes[Random.Shared.Next(0, boxes.Count)];
+            idealBox = boxes[Random.Shared.Next(boxes.Count)];
 
         }
 
@@ -150,6 +152,6 @@ public class Game
         {
             Players.X => Players.O,
             Players.O => Players.X,
-            _ => throw new NotImplementedException()
+            _ => throw new ArgumentException("Invalid Player", nameof(player))
         };
 }

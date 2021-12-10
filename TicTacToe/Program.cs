@@ -43,9 +43,9 @@ internal class Program
         {
             Console.WriteLine($"Games:  {Statistics.GamesPlayed}");
             Console.WriteLine($"Wins:   {Statistics.Wins}");
-            Console.WriteLine($"L0sses: {Statistics.Losses}");
+            Console.WriteLine($"Losses: {Statistics.Losses}");
             Console.WriteLine($"Ties:   {Statistics.Ties}");
-            Console.WriteLine($"Win %:  {Statistics.WinPercent}%");
+            Console.WriteLine($"Win %:  {Statistics.WinPercent:0}%");
             return false;
         }
     }

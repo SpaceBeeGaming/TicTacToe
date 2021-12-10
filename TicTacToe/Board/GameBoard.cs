@@ -184,7 +184,7 @@ public partial class GameBoard
         }
         else
         {
-            throw new InvalidOperationException("Unknown Box known.");
+            throw new ArgumentException("Unknown Box.", nameof(box));
         }
     }
 

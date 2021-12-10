@@ -15,6 +15,16 @@
 		<!--HACK: Is there a better way?-->
 		<IsWindows Condition="'$(RuntimeIdentifier)' == 'win-x64' or '$(RuntimeIdentifier)' == 'win-x86' or '$(Configuration)' == 'Debug'">true</IsWindows>
 		<DefineConstants Condition="'$(IsWindows)'== 'true'">$(DefineConstants);WINDOWS</DefineConstants>
+		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+		<Product>Console Tic-Tac-Toe</Product>
+		<Company>SpaceBeeGaming</Company>
+		<Authors>SpaceBeeGaming</Authors>
+		<Version>1.2.0</Version>
+		<NeutralLanguage>en-FI</NeutralLanguage>
+		<Copyright>MIT</Copyright>
+		<RepositoryUrl>https://github.com/SpaceBeeGaming/TicTacToe</RepositoryUrl>
+		<GeneratePackageOnBuild>False</GeneratePackageOnBuild>
+		<Description>Tic-Tac-Toe Playable in terminal.</Description>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -44,7 +54,7 @@
 	</ItemGroup>
 
 	<Target Name="PostPublish" AfterTargets="Publish">
-		<Move Condition="'$(IsWindows)'=='true'" SourceFiles="bin\Publish\$(RuntimeIdentifier)\TicTacToe.exe" DestinationFiles="bin\Publish\TicTacToe-$(RuntimeIdentifier).exe"/>
-		<Move Condition="'$(IsWindows)'!='true'" SourceFiles="bin\Publish\$(RuntimeIdentifier)\TicTacToe" DestinationFiles="bin\Publish\TicTacToe-$(RuntimeIdentifier)"/>
+		<Move Condition="'$(IsWindows)'=='true'" SourceFiles="bin\Publish\$(RuntimeIdentifier)\TicTacToe.exe" DestinationFiles="bin\Publish\TicTacToe-$(RuntimeIdentifier).exe" />
+		<Move Condition="'$(IsWindows)'!='true'" SourceFiles="bin\Publish\$(RuntimeIdentifier)\TicTacToe" DestinationFiles="bin\Publish\TicTacToe-$(RuntimeIdentifier)" />
 	</Target>
 </Project>

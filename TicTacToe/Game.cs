@@ -33,6 +33,7 @@ public class Game
         {
             turnCounter++;
         }
+        int turnCountOffset = turnCounter;
 
         do
         {
@@ -42,7 +43,7 @@ public class Game
                 SetGameOverType(status.winner);
                 break;
             }
-            
+
             if (turnCounter % 2 is 0)
             {
                 PlayerTurn(HumanPlayer);
@@ -55,6 +56,8 @@ public class Game
             turnCounter++;
 
         } while (true);
+
+        _statistics.AddTurnCount(turnCounter - turnCountOffset);
     }
 
     public void AnnounceWinner()

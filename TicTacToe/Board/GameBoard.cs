@@ -83,13 +83,9 @@ public partial class GameBoard
         }
     }
 
-    public bool DrawX(Box box) => DrawSymbol(box, Players.X);
+    public bool DrawPlayer(Boxes box, Players player) => DrawPlayer(GetBox(box), player);
 
-    public bool DrawX(Boxes box) => DrawX(GetBox(box));
-
-    public bool DrawO(Box box) => DrawSymbol(box, Players.O);
-
-    private bool DrawSymbol(Box box, Players player)
+    public bool DrawPlayer(Box box, Players player)
     {
         if (box.IsOccupied)
         {

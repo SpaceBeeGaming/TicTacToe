@@ -77,15 +77,15 @@ public class Game
 
             result = key switch
             {
-                ConsoleKey.NumPad7 or ConsoleKey.D1 => Board.DrawX(Boxes.B1),
-                ConsoleKey.NumPad8 or ConsoleKey.D2 => Board.DrawX(Boxes.B2),
-                ConsoleKey.NumPad9 or ConsoleKey.D3 => Board.DrawX(Boxes.B3),
-                ConsoleKey.NumPad4 or ConsoleKey.D4 => Board.DrawX(Boxes.B4),
-                ConsoleKey.NumPad5 or ConsoleKey.D5 => Board.DrawX(Boxes.B5),
-                ConsoleKey.NumPad6 or ConsoleKey.D6 => Board.DrawX(Boxes.B6),
-                ConsoleKey.NumPad1 or ConsoleKey.D7 => Board.DrawX(Boxes.B7),
-                ConsoleKey.NumPad2 or ConsoleKey.D8 => Board.DrawX(Boxes.B8),
-                ConsoleKey.NumPad3 or ConsoleKey.D9 => Board.DrawX(Boxes.B9),
+                ConsoleKey.NumPad7 or ConsoleKey.D1 => Board.DrawPlayer(Boxes.B1, Players.X),
+                ConsoleKey.NumPad8 or ConsoleKey.D2 => Board.DrawPlayer(Boxes.B2, Players.X),
+                ConsoleKey.NumPad9 or ConsoleKey.D3 => Board.DrawPlayer(Boxes.B3, Players.X),
+                ConsoleKey.NumPad4 or ConsoleKey.D4 => Board.DrawPlayer(Boxes.B4, Players.X),
+                ConsoleKey.NumPad5 or ConsoleKey.D5 => Board.DrawPlayer(Boxes.B5, Players.X),
+                ConsoleKey.NumPad6 or ConsoleKey.D6 => Board.DrawPlayer(Boxes.B6, Players.X),
+                ConsoleKey.NumPad1 or ConsoleKey.D7 => Board.DrawPlayer(Boxes.B7, Players.X),
+                ConsoleKey.NumPad2 or ConsoleKey.D8 => Board.DrawPlayer(Boxes.B8, Players.X),
+                ConsoleKey.NumPad3 or ConsoleKey.D9 => Board.DrawPlayer(Boxes.B9, Players.X),
                 _ => false,
             };
         } while (result is false);
@@ -126,7 +126,7 @@ public class Game
 
         }
 
-        Board.DrawO(idealBox);
+        Board.DrawPlayer(idealBox, Players.O);
     }
 
     private void SetGameOverType(Players? winner) =>

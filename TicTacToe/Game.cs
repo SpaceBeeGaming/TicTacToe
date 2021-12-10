@@ -5,29 +5,38 @@ namespace TicTacToe;
 
 public class Game
 {
+    private readonly Statistics _statistics;
+    private readonly GameBoard _board = new();
+
+    public Players HumanPlayer { get; private set; }
+
     public Game(Statistics statistics)
     {
-        Statistics = statistics;
+        _statistics = statistics;
     }
 
-    public GameBoard Board { get; } = new GameBoard();
 
     public GameOverType Winner { get; private set; }
-    public Statistics Statistics { get; }
 
     public void Setup()
     {
-        Board.DrawBoard();
+        _board.DrawBoard();
         LedManager.SetDark();
+        HumanPlayer = (Players)Random.Shared.Next(0, 2);
+        Console.WriteLine($"You are: {HumanPlayer}");
     }
 
     public void Play()
     {
-        int turnCounter = Random.Shared.Next(0, 2);
-        (bool gameOver, char? winner) status;
+        int turnCounter = 0;
+        if (HumanPlayer is Players.O)
+        {
+            turnCounter++;
+        }
+
         do
         {
-            status = Board.CheckForWinner();
+            var status = _board.CheckForWinner();
             if (status.gameOver)
             {
                 SetGameOverType(status.winner);
@@ -36,11 +45,11 @@ public class Game
 
             if (turnCounter % 2 is 0)
             {
-                PlayerTurn();
+                PlayerTurn(HumanPlayer);
             }
             else
             {
-                OpponentTurn();
+                OpponentTurn(GetOpposingPlayer(HumanPlayer));
             }
 
             turnCounter++;
@@ -55,20 +64,20 @@ public class Game
         {
             case GameOverType.Tie:
                 Console.WriteLine("Tie!");
-                Statistics.Ties++;
+                _statistics.Ties++;
                 break;
             case GameOverType.X:
                 Console.WriteLine($"You win!");
-                Statistics.Wins++;
+                _statistics.Wins++;
                 break;
             case GameOverType.O:
-                Console.WriteLine("You lost!");
-                Statistics.Losses++;
+                Console.WriteLine("You lose!");
+                _statistics.Losses++;
                 break;
         }
     }
 
-    private void PlayerTurn()
+    private void PlayerTurn(Players player)
     {
         bool result;
         do
@@ -77,24 +86,24 @@ public class Game
 
             result = key switch
             {
-                ConsoleKey.NumPad7 or ConsoleKey.D1 => Board.DrawX(Boxes.B1),
-                ConsoleKey.NumPad8 or ConsoleKey.D2 => Board.DrawX(Boxes.B2),
-                ConsoleKey.NumPad9 or ConsoleKey.D3 => Board.DrawX(Boxes.B3),
-                ConsoleKey.NumPad4 or ConsoleKey.D4 => Board.DrawX(Boxes.B4),
-                ConsoleKey.NumPad5 or ConsoleKey.D5 => Board.DrawX(Boxes.B5),
-                ConsoleKey.NumPad6 or ConsoleKey.D6 => Board.DrawX(Boxes.B6),
-                ConsoleKey.NumPad1 or ConsoleKey.D7 => Board.DrawX(Boxes.B7),
-                ConsoleKey.NumPad2 or ConsoleKey.D8 => Board.DrawX(Boxes.B8),
-                ConsoleKey.NumPad3 or ConsoleKey.D9 => Board.DrawX(Boxes.B9),
+                ConsoleKey.NumPad7 or ConsoleKey.D1 => _board.DrawPlayer(Boxes.B1, player),
+                ConsoleKey.NumPad8 or ConsoleKey.D2 => _board.DrawPlayer(Boxes.B2, player),
+                ConsoleKey.NumPad9 or ConsoleKey.D3 => _board.DrawPlayer(Boxes.B3, player),
+                ConsoleKey.NumPad4 or ConsoleKey.D4 => _board.DrawPlayer(Boxes.B4, player),
+                ConsoleKey.NumPad5 or ConsoleKey.D5 => _board.DrawPlayer(Boxes.B5, player),
+                ConsoleKey.NumPad6 or ConsoleKey.D6 => _board.DrawPlayer(Boxes.B6, player),
+                ConsoleKey.NumPad1 or ConsoleKey.D7 => _board.DrawPlayer(Boxes.B7, player),
+                ConsoleKey.NumPad2 or ConsoleKey.D8 => _board.DrawPlayer(Boxes.B8, player),
+                ConsoleKey.NumPad3 or ConsoleKey.D9 => _board.DrawPlayer(Boxes.B9, player),
                 _ => false,
             };
         } while (result is false);
     }
 
-    private void OpponentTurn()
+    private void OpponentTurn(Players player)
     {
         Box? idealBox = null;
-        var winningLine = Board.GetWinningLine();
+        var winningLine = _board.GetWinningLine(player);
         if (winningLine is not null)
         {
             idealBox = winningLine.GetEmptyBoxes().FirstOrDefault();
@@ -102,7 +111,7 @@ public class Game
 
         if (idealBox is null)
         {
-            var dangerousLines = Board.GetDangerousLines();
+            var dangerousLines = _board.GetDangerousLines(player);
 
             if (dangerousLines.Count is not 0)
             {
@@ -120,27 +129,27 @@ public class Game
 
         if (idealBox is null)
         {
-            var boxes = Board.GetEmptyBoxes().ToList();
+            var boxes = _board.GetEmptyBoxes().ToList();
             idealBox = boxes[Random.Shared.Next(0, boxes.Count)];
 
         }
 
-        Board.DrawO(idealBox);
+        _board.DrawPlayer(idealBox, player);
     }
 
-    private void SetGameOverType(char? winner)
-    {
-        switch (winner)
+    private void SetGameOverType(Players? winner) =>
+        Winner = winner switch
         {
-            case 'X':
-                Winner = GameOverType.X;
-                break;
-            case 'O':
-                Winner = GameOverType.O;
-                break;
-            case null:
-                Winner = GameOverType.Tie;
-                break;
-        }
-    }
+            Players.X => GameOverType.X,
+            Players.O => GameOverType.O,
+            _ => GameOverType.Tie,
+        };
+
+    public static Players GetOpposingPlayer(Players player) =>
+        player switch
+        {
+            Players.X => Players.O,
+            Players.O => Players.X,
+            _ => throw new NotImplementedException()
+        };
 }

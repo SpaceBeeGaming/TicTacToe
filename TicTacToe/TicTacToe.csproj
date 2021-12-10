@@ -10,6 +10,8 @@
 		<Platforms>x64;x86</Platforms>
 		<DebugType>embedded</DebugType>
 		<RuntimeIdentifiers>win-x86;win-x64;linux-x64;osx-x64</RuntimeIdentifiers>
+		<PublishSingleFile>true</PublishSingleFile>
+		<PublishTrimmed>true</PublishTrimmed>
 		<!--HACK: Is there a better way?-->
 		<IsWindows Condition="'$(RuntimeIdentifier)' == 'win-x64' or '$(RuntimeIdentifier)' == 'win-x86' or '$(Configuration)' == 'Debug'">true</IsWindows>
 		<DefineConstants Condition="'$(IsWindows)'== 'true'">$(DefineConstants);WINDOWS</DefineConstants>

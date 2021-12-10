@@ -19,7 +19,7 @@ internal class Program
         } while (play);
 
         LedManager.Shutdown();
-        
+
         Console.WriteLine("Press any key to exit...");
         Console.ReadKey(true);
     }
@@ -45,7 +45,13 @@ internal class Program
             Console.WriteLine($"Wins:   {Statistics.Wins}");
             Console.WriteLine($"Losses: {Statistics.Losses}");
             Console.WriteLine($"Ties:   {Statistics.Ties}");
+            
             Console.WriteLine($"Win %:  {Statistics.WinPercent:0}%");
+            Console.WriteLine($"Loss %:  {Statistics.LossPercent:0}%");
+            Console.WriteLine($"Tie %:  {Statistics.TiePercent:0}%");
+            
+            Console.WriteLine($"Average turn count:  {Statistics.AverageTurnCount}");
+
             return false;
         }
     }

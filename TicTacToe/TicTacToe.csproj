@@ -44,7 +44,7 @@
 	</ItemGroup>
 
 	<Target Name="PostPublish" AfterTargets="Publish">
-		<Move Condition="'$(IsWindows)'=='true'" SourceFiles="bin\Release\net6.0\publish\$(RuntimeIdentifier)\TicTacToe.exe" DestinationFiles="bin\Publish\Tictactoe-$(RuntimeIdentifier).exe"/>
-		<Move Condition="'$(IsWindows)'!='true'" SourceFiles="bin\Release\net6.0\publish\$(RuntimeIdentifier)\TicTacToe" DestinationFiles="bin\Publish\Tictactoe-$(RuntimeIdentifier)"/>
+		<Move Condition="'$(IsWindows)'=='true'" SourceFiles="bin\Publish\$(RuntimeIdentifier)\TicTacToe.exe" DestinationFiles="bin\Publish\TicTacToe-$(RuntimeIdentifier).exe"/>
+		<Move Condition="'$(IsWindows)'!='true'" SourceFiles="bin\Publish\$(RuntimeIdentifier)\TicTacToe" DestinationFiles="bin\Publish\TicTacToe-$(RuntimeIdentifier)"/>
 	</Target>
 </Project>

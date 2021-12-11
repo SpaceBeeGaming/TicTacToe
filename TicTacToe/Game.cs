@@ -33,6 +33,10 @@ public class Game
         {
             turnCounter++;
         }
+        else
+        {
+            _statistics.AddXStart();
+        }
         int turnCountOffset = turnCounter;
 
         do
@@ -66,17 +70,17 @@ public class Game
         if (Winner is GameOverType.Tie)
         {
             Console.WriteLine("Tie!");
-            _statistics.Ties++;
+            _statistics.AddTie();
         }
         else if (PlayerIsWinner())
         {
             Console.WriteLine("You win!");
-            _statistics.Wins++;
+            _statistics.AddWin();
         }
         else
         {
             Console.WriteLine("You lose!");
-            _statistics.Losses++;
+            _statistics.AddLoss();
         }
 
         bool PlayerIsWinner() => (Winner is GameOverType.X && HumanPlayer is Players.X) || (Winner is GameOverType.O && HumanPlayer is Players.O);

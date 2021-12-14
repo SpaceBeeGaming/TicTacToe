@@ -8,9 +8,10 @@ internal class Program
 
     private static void Main()
     {
-
+        // Initialize the LED System.
         LedManager.Init();
 
+        // Run Tic-Tac-Toe in a loop.
         bool play;
         do
         {
@@ -18,7 +19,11 @@ internal class Program
 
         } while (play);
 
+        // Shutdown LED System.
         LedManager.Shutdown();
+
+        // TODO: Move statistics printout here.
+
 
         Console.WriteLine("Press any key to exit...");
         Console.ReadKey(true);
@@ -26,6 +31,7 @@ internal class Program
 
     private static bool RunGame()
     {
+        // Game flow control.
         Game game = new(Statistics);
         game.Setup();
         game.Play();
@@ -33,6 +39,8 @@ internal class Program
 
         Console.WriteLine("\nPress <Enter> to play again.");
         Console.WriteLine("Or anything else to exit.\n");
+
+        // Determine if the player wants to play again.
         var key = Console.ReadKey(true).Key;
         LedManager.StopEffectOnKey(KeyNames.NUM_ENTER);
         if (key == ConsoleKey.Enter)
@@ -41,6 +49,8 @@ internal class Program
         }
         else
         {
+            // TODO: Move to Main, since these make more sense there.
+            // Prints statistics about the session.
             Console.WriteLine($"Games:  {Statistics.GamesPlayed}");
             Console.WriteLine($"Wins:   {Statistics.Wins}");
             Console.WriteLine($"Losses: {Statistics.Losses}");

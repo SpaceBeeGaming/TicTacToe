@@ -22,8 +22,18 @@ internal class Program
         // Shutdown LED System.
         LedManager.Shutdown();
 
-        // TODO: Move statistics printout here.
-
+        // Prints statistics about the session.
+        Console.WriteLine($"Games:  {Statistics.GamesPlayed}");
+        Console.WriteLine($"Wins:   {Statistics.Wins}");
+        Console.WriteLine($"Losses: {Statistics.Losses}");
+        Console.WriteLine($"Ties:   {Statistics.Ties}");
+        Console.WriteLine();
+        Console.WriteLine($"Win %:  {Statistics.WinPercent:0}%");
+        Console.WriteLine($"Loss %: {Statistics.LossPercent:0}%");
+        Console.WriteLine($"Tie %:  {Statistics.TiePercent:0}%");
+        Console.WriteLine();
+        Console.WriteLine($"Average turns: {Statistics.AverageTurnCount}");
+        Console.WriteLine($"Your starts:   {Statistics.XStartPercent:0}%");
 
         Console.WriteLine("Press any key to exit...");
         Console.ReadKey(true);
@@ -43,27 +53,6 @@ internal class Program
         // Determine if the player wants to play again.
         var key = Console.ReadKey(true).Key;
         LedManager.StopEffectOnKey(KeyNames.NUM_ENTER);
-        if (key == ConsoleKey.Enter)
-        {
-            return true;
-        }
-        else
-        {
-            // TODO: Move to Main, since these make more sense there.
-            // Prints statistics about the session.
-            Console.WriteLine($"Games:  {Statistics.GamesPlayed}");
-            Console.WriteLine($"Wins:   {Statistics.Wins}");
-            Console.WriteLine($"Losses: {Statistics.Losses}");
-            Console.WriteLine($"Ties:   {Statistics.Ties}");
-            Console.WriteLine();
-            Console.WriteLine($"Win %:  {Statistics.WinPercent:0}%");
-            Console.WriteLine($"Loss %: {Statistics.LossPercent:0}%");
-            Console.WriteLine($"Tie %:  {Statistics.TiePercent:0}%");
-            Console.WriteLine();
-            Console.WriteLine($"Average turns: {Statistics.AverageTurnCount}");
-            Console.WriteLine($"Your starts:   {Statistics.XStartPercent:0}%");
-
-            return false;
-        }
+        return key is ConsoleKey.Enter;
     }
 }

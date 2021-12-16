@@ -1,4 +1,5 @@
 ﻿using TicTacToe.Led;
+using TicTacToe.Properties;
 
 namespace TicTacToe;
 
@@ -35,7 +36,7 @@ internal class Program
         Console.WriteLine($"Average turns: {Statistics.AverageTurnCount}");
         Console.WriteLine($"Your starts:   {Statistics.XStartPercent:0}%");
 
-        Console.WriteLine("Press any key to exit...");
+        Console.WriteLine(Resources.ExitPrompt);
         Console.ReadKey(true);
     }
 
@@ -47,8 +48,8 @@ internal class Program
         game.Play();
         game.AnnounceWinner();
 
-        Console.WriteLine("\nPress <Enter> to play again.");
-        Console.WriteLine("Or anything else to exit.\n");
+        Console.WriteLine();
+        Console.WriteLine(Resources.PlayAgainPrompt);
 
         // Determine if the player wants to play again.
         var key = Console.ReadKey(true).Key;

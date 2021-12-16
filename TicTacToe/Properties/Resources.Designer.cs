@@ -70,7 +70,8 @@ namespace TicTacToe.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Press &lt;Enter&gt; to play again.\nOr anything else to exit..
+        ///   Looks up a localized string similar to Press &lt;Enter&gt; to play again.
+        ///Or anything else to exit..
         /// </summary>
         internal static string PlayAgainPrompt {
             get {

@@ -121,7 +121,8 @@
     <value>Press any key to exit...</value>
   </data>
   <data name="PlayAgainPrompt" xml:space="preserve">
-    <value>Press &lt;Enter&gt; to play again.\nOr anything else to exit.</value>
+    <value>Press &lt;Enter&gt; to play again.
+Or anything else to exit.</value>
   </data>
   <data name="PlayerLoss" xml:space="preserve">
     <value>You lose!</value>

@@ -1,5 +1,6 @@
 ﻿using TicTacToe.Board;
 using TicTacToe.Led;
+using TicTacToe.Properties;
 
 namespace TicTacToe;
 
@@ -96,17 +97,17 @@ public class Game
         LedManager.FlashEnter(Winner);
         if (Winner is GameOverType.Tie)
         {
-            Console.WriteLine("Tie!");
+            Console.WriteLine(Resources.Tie);
             _statistics.AddTie();
         }
         else if (PlayerIsWinner())
         {
-            Console.WriteLine("You win!");
+            Console.WriteLine(Resources.PlayerWin);
             _statistics.AddWin();
         }
         else
         {
-            Console.WriteLine("You lose!");
+            Console.WriteLine(Resources.PlayerLoss);
             _statistics.AddLoss();
         }
 

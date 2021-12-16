@@ -4,7 +4,7 @@ using TicTacToe.Board;
 
 namespace TicTacToe.Led;
 
-public class BoxStateToColorConverter
+public static class BoxStateToColorConverter
 {
     private static readonly Color _oColor = Color.Red;
     private static readonly Color _xColor = Color.Blue;

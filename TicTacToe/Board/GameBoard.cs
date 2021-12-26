@@ -67,10 +67,18 @@ public partial class GameBoard
         };
     }
 
+    /// <summary>
+    /// Gets all of the empty boxes on the board.
+    /// </summary>
+    /// <returns>All of the empty boxes.</returns>
     public IEnumerable<Box> GetEmptyBoxes() => _boxes.Where(box => box.IsOccupied is false);
 
+    /// <summary>
+    /// Draws the game board.
+    /// </summary>
     public void DrawBoard()
     {
+        // Draw the game board and save the cursor offset.
         _boardOffset = System.Console.GetCursorPosition();
         for (var i = 0; i < _grid.Length; i++)
         {
@@ -78,24 +86,44 @@ public partial class GameBoard
         }
     }
 
+    /// <summary>
+    /// Wrapper for <see cref="DrawPlayer(Box, Players)"/> that doesn't require a reference to the actual <see cref="Box"/>.
+    /// </summary>
+    /// <param name="box">The instance of the <see cref="Boxes"/> to target.</param>
+    /// <param name="player">The instance of <see cref="Players"/> to draw.</param>
+    /// <returns></returns>
     public bool DrawPlayer(Boxes box, Players player) => DrawPlayer(GetBox(box), player);
 
+    /// <summary>
+    /// Draws the specific <paramref name="player"/> to the specific <paramref name="box"/>.
+    /// </summary>
+    /// <param name="box">The <see cref="Box"/> to target.</param>
+    /// <param name="player">The instance of <see cref="Players"/> to draw.</param>
+    /// <returns></returns>
     public bool DrawPlayer(Box box, Players player)
     {
+        // Check if the box is empty.
         if (box.IsOccupied)
         {
             return false;
         }
 
+        // Claim the box.
         box.Player = player;
         LedManager.SetBox(box, this);
 
+        // Draw the symbol on the console.
         var oldPos = Console.SetCursorPosition(_boardOffset, box.Location);
         System.Console.Write(player);
         Console.SetCursorPosition(oldPos);
+
         return true;
     }
 
+    /// <summary>
+    /// Determines if the game has ended and if there is a winner.
+    /// </summary>
+    /// <returns></returns>
     public (bool gameOver, Players? winner) CheckForWinner()
     {
         // Iterate over all the rows, columns and diagonals.
@@ -124,6 +152,18 @@ public partial class GameBoard
         return (false, null);
     }
 
+    /// <summary>
+    /// Gets the list of lines where the opposing player to <paramref name="player"/> is one away from winning.
+    /// </summary>
+    /// <param name="player">
+    /// <para>
+    /// The instance of <see cref="Players"/> reference to.
+    /// </para>
+    /// <remark>
+    /// If <see cref="Players.X"/> is used as input, this will return the lines where <see cref="Players.O"/> is about to win.
+    /// </remark>
+    /// </param>
+    /// <returns>A list of dangerous <see cref="Line"/>s.</returns>
     public IList<Line> GetDangerousLines(Players player) => GetLines(Game.GetOpposingPlayer(player), 2);
 
     public Line? GetWinningLine(Players player) => GetLines(player, 2, true).FirstOrDefault();
@@ -142,6 +182,12 @@ public partial class GameBoard
         _ => throw new InvalidOperationException("Cannot convert null into a Box."),
     };
 
+    /// <summary>
+    /// Maps the boxes to <see cref="KeyNames"/> enum for use by the LED System.
+    /// </summary>
+    /// <param name="box">The instance of <see cref="Box"/> to get the key for.</param>
+    /// <returns>The key associated with that box.</returns>
+    /// <exception cref="ArgumentException">Thrown if the <paramref name="box"/> was unexpected.</exception>
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0046:Convert to conditional expression", Justification = "This would make the result quite unreadable.")]
     public KeyNames GetKeyNameFromBox(Box box)
     {
@@ -191,16 +237,22 @@ public partial class GameBoard
     private IList<Line> GetLines(Players player, int numHits, bool shortCircuit = false)
     {
         List<Line> lines = new();
+
+        // Iterate over all the lines in the grid.
         foreach (var line in _lines)
         {
+            // Skip id it is already full.
             if (line.IsFull)
             {
                 continue;
             }
 
+            // Check if the specific line satisfies the condition for empty boxes.
             if (line.Boxes.Count(box => box.Player == player) == numHits)
             {
                 lines.Add(line);
+
+                // If so specified will exit after the first line is found.
                 if (shortCircuit)
                 {
                     break;
@@ -210,5 +262,4 @@ public partial class GameBoard
 
         return lines;
     }
-
 }

@@ -8,11 +8,11 @@ public class Statistics
     public int Losses { get; private set; }
     public int Ties { get; private set; }
     public int GamesPlayed => Wins + Losses + Ties;
-    public double WinPercent => Wins * 1.0 / GamesPlayed * 100;
-    public double LossPercent => Losses * 1.0 / GamesPlayed * 100;
-    public double TiePercent => Ties * 1.0 / GamesPlayed * 100;
+    public double WinPercent => Wins * 100.0 / GamesPlayed;
+    public double LossPercent => Losses * 100.0 / GamesPlayed;
+    public double TiePercent => Ties * 100.0 / GamesPlayed;
     public int AverageTurnCount => (int)Math.Round(_turnCounts.Average(), MidpointRounding.AwayFromZero);
-    public double XStartPercent => _xStarts * 1.0 / GamesPlayed * 100;
+    public double XStartPercent => _xStarts * 100.0 / GamesPlayed;
 
     public void AddTurnCount(int turnCount) => _turnCounts.Add(turnCount);
 

@@ -15,12 +15,13 @@ internal class Program
         LedManager.Init();
 
         // Ask about alternate input method.
-        Console.WriteLine("Press: <Ctrl + Enter> to enable number row as input.");
+        Console.WriteLine("Press: <Backspace> to enable number row as input.");
         Console.WriteLine("This will disable numpad.");
         var key = Console.ReadKey(true);
-        if (key.Key is ConsoleKey.Enter && key.Modifiers is ConsoleModifiers.Control)
+        if (key.Key is ConsoleKey.Backspace)
         {
             UseNumRow = true;
+            Console.WriteLine("Set NumRow");
         }
 
         // Run Tic-Tac-Toe in a loop.

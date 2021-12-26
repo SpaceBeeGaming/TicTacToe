@@ -87,7 +87,7 @@ public partial class GameBoard
     }
 
     /// <summary>
-    /// Wrapper for <see cref="DrawPlayer(Box, Players)"/> that doesn't require access to the actual boxes.
+    /// Wrapper for <see cref="DrawPlayer(Box, Players)"/> that doesn't require a reference to the actual <see cref="Box"/>.
     /// </summary>
     /// <param name="box">The instance of the <see cref="Boxes"/> to target.</param>
     /// <param name="player">The instance of <see cref="Players"/> to draw.</param>
@@ -262,5 +262,4 @@ public partial class GameBoard
 
         return lines;
     }
-
 }

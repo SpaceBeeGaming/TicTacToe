@@ -25,16 +25,24 @@
 		<RepositoryUrl>https://github.com/SpaceBeeGaming/TicTacToe</RepositoryUrl>
 		<GeneratePackageOnBuild>False</GeneratePackageOnBuild>
 		<Description>Tic-Tac-Toe Playable in terminal.</Description>
+		<Configurations>Debug;Release;LinuxDebug</Configurations>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
 		<DefineConstants>$(DefineConstants);TRACE</DefineConstants>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='LinuxDebug|x64'">
+	  <DefineConstants>$(DefineConstants);TRACE</DefineConstants>
 	</PropertyGroup>
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
 		<DefineConstants>$(DefineConstants);TRACE</DefineConstants>
 	</PropertyGroup>
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x86'">
 		<DefineConstants>$(DefineConstants);TRACE</DefineConstants>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='LinuxDebug|x86'">
+	  <DefineConstants>$(DefineConstants);TRACE</DefineConstants>
 	</PropertyGroup>
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x86'">
 		<DefineConstants>$(DefineConstants);TRACE</DefineConstants>

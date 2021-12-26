@@ -23,7 +23,6 @@ public class Game
         _statistics = statistics;
     }
 
-
     public GameOverType Winner { get; private set; }
 
     /// <summary>
@@ -119,20 +118,39 @@ public class Game
         bool result;
         do
         {
-            var key = Console.ReadKey(true).Key;
+            ConsoleKey key = Console.ReadKey(true).Key;
 
-            result = key switch
+            result = Program.UseNumRow switch
             {
-                ConsoleKey.NumPad7 or ConsoleKey.D1 => _board.DrawPlayer(Boxes.B1, player),
-                ConsoleKey.NumPad8 or ConsoleKey.D2 => _board.DrawPlayer(Boxes.B2, player),
-                ConsoleKey.NumPad9 or ConsoleKey.D3 => _board.DrawPlayer(Boxes.B3, player),
-                ConsoleKey.NumPad4 or ConsoleKey.D4 => _board.DrawPlayer(Boxes.B4, player),
-                ConsoleKey.NumPad5 or ConsoleKey.D5 => _board.DrawPlayer(Boxes.B5, player),
-                ConsoleKey.NumPad6 or ConsoleKey.D6 => _board.DrawPlayer(Boxes.B6, player),
-                ConsoleKey.NumPad1 or ConsoleKey.D7 => _board.DrawPlayer(Boxes.B7, player),
-                ConsoleKey.NumPad2 or ConsoleKey.D8 => _board.DrawPlayer(Boxes.B8, player),
-                ConsoleKey.NumPad3 or ConsoleKey.D9 => _board.DrawPlayer(Boxes.B9, player),
-                _ => false,
+                // Using Number row as input. Assuming that the user doesn't have a Numpad.
+                true => key switch
+                {
+                    ConsoleKey.D1 => _board.DrawPlayer(Boxes.B1, player),
+                    ConsoleKey.D2 => _board.DrawPlayer(Boxes.B2, player),
+                    ConsoleKey.D3 => _board.DrawPlayer(Boxes.B3, player),
+                    ConsoleKey.D4 => _board.DrawPlayer(Boxes.B4, player),
+                    ConsoleKey.D5 => _board.DrawPlayer(Boxes.B5, player),
+                    ConsoleKey.D6 => _board.DrawPlayer(Boxes.B6, player),
+                    ConsoleKey.D7 => _board.DrawPlayer(Boxes.B7, player),
+                    ConsoleKey.D8 => _board.DrawPlayer(Boxes.B8, player),
+                    ConsoleKey.D9 => _board.DrawPlayer(Boxes.B9, player),
+                    _ => false,
+                },
+                // Using Numpad as input. Number row defined due to different behavior of ReadKey() on Linux.
+                // (Numpad is returned as number row keys.)
+                _ => key switch
+                {
+                    ConsoleKey.NumPad7 or ConsoleKey.D7 => _board.DrawPlayer(Boxes.B1, player),
+                    ConsoleKey.NumPad8 or ConsoleKey.D8 => _board.DrawPlayer(Boxes.B2, player),
+                    ConsoleKey.NumPad9 or ConsoleKey.D9 => _board.DrawPlayer(Boxes.B3, player),
+                    ConsoleKey.NumPad4 or ConsoleKey.D4 => _board.DrawPlayer(Boxes.B4, player),
+                    ConsoleKey.NumPad5 or ConsoleKey.D5 => _board.DrawPlayer(Boxes.B5, player),
+                    ConsoleKey.NumPad6 or ConsoleKey.D6 => _board.DrawPlayer(Boxes.B6, player),
+                    ConsoleKey.NumPad1 or ConsoleKey.D1 => _board.DrawPlayer(Boxes.B7, player),
+                    ConsoleKey.NumPad2 or ConsoleKey.D2 => _board.DrawPlayer(Boxes.B8, player),
+                    ConsoleKey.NumPad3 or ConsoleKey.D3 => _board.DrawPlayer(Boxes.B9, player),
+                    _ => false,
+                },
             };
         } while (result is false);
     }

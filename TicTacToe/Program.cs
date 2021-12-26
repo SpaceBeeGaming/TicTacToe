@@ -7,10 +7,21 @@ internal class Program
 {
     public static Statistics Statistics { get; } = new();
 
+    public static bool UseNumRow { get; private set; }
+
     private static void Main()
     {
         // Initialize the LED System.
         LedManager.Init();
+
+        // Ask about alternate input method.
+        Console.WriteLine("Press: <Ctrl + Enter> to enable number row as input.");
+        Console.WriteLine("This will disable numpad.");
+        var key = Console.ReadKey(true);
+        if (key.Key is ConsoleKey.Enter && key.Modifiers is ConsoleModifiers.Control)
+        {
+            UseNumRow = true;
+        }
 
         // Run Tic-Tac-Toe in a loop.
         bool play;

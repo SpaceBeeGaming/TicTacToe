@@ -136,19 +136,18 @@ public class Game
                     ConsoleKey.D9 => _board.DrawPlayer(Boxes.B9, player),
                     _ => false,
                 },
-                // Using Numpad as input. Number row defined due to different behavior of ReadKey() on Linux.
-                // (Numpad is returned as number row keys.)
+                // Using Numpad as input.
                 _ => key switch
                 {
-                    ConsoleKey.NumPad7 or ConsoleKey.D7 => _board.DrawPlayer(Boxes.B1, player),
-                    ConsoleKey.NumPad8 or ConsoleKey.D8 => _board.DrawPlayer(Boxes.B2, player),
-                    ConsoleKey.NumPad9 or ConsoleKey.D9 => _board.DrawPlayer(Boxes.B3, player),
-                    ConsoleKey.NumPad4 or ConsoleKey.D4 => _board.DrawPlayer(Boxes.B4, player),
-                    ConsoleKey.NumPad5 or ConsoleKey.D5 => _board.DrawPlayer(Boxes.B5, player),
-                    ConsoleKey.NumPad6 or ConsoleKey.D6 => _board.DrawPlayer(Boxes.B6, player),
-                    ConsoleKey.NumPad1 or ConsoleKey.D1 => _board.DrawPlayer(Boxes.B7, player),
-                    ConsoleKey.NumPad2 or ConsoleKey.D2 => _board.DrawPlayer(Boxes.B8, player),
-                    ConsoleKey.NumPad3 or ConsoleKey.D3 => _board.DrawPlayer(Boxes.B9, player),
+                    ConsoleKey.NumPad7 => _board.DrawPlayer(Boxes.B1, player),
+                    ConsoleKey.NumPad8 => _board.DrawPlayer(Boxes.B2, player),
+                    ConsoleKey.NumPad9 => _board.DrawPlayer(Boxes.B3, player),
+                    ConsoleKey.NumPad4 => _board.DrawPlayer(Boxes.B4, player),
+                    ConsoleKey.NumPad5 => _board.DrawPlayer(Boxes.B5, player),
+                    ConsoleKey.NumPad6 => _board.DrawPlayer(Boxes.B6, player),
+                    ConsoleKey.NumPad1 => _board.DrawPlayer(Boxes.B7, player),
+                    ConsoleKey.NumPad2 => _board.DrawPlayer(Boxes.B8, player),
+                    ConsoleKey.NumPad3 => _board.DrawPlayer(Boxes.B9, player),
                     _ => false,
                 },
             };

@@ -40,7 +40,7 @@ internal class Program
 
         PrintStatistics();
 
-        Console.WriteLine("Press any key to exit...");
+        Console.WriteLine(Resources.ExitPrompt);
         Console.ReadKey(true);
     }
 
@@ -75,8 +75,5 @@ internal class Program
         Console.WriteLine($"Average Duration: {Statistics.AverageGameDuration:s\\:ff} s");
         Console.WriteLine($"Average Turns:    {Statistics.AverageTurnCount}");
         Console.WriteLine($"Your Starts:      {Statistics.XStartPercent:0}%");
-
-        Console.WriteLine(Resources.ExitPrompt);
-        Console.ReadKey(true);
     }
 }

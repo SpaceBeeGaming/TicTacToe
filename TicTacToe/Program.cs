@@ -1,6 +1,7 @@
 ﻿using System.Diagnostics;
 
 using TicTacToe.Led;
+using TicTacToe.Properties;
 
 namespace TicTacToe;
 
@@ -9,11 +10,24 @@ internal class Program
     public static Statistics Statistics { get; } = new();
     public static Stopwatch Stopwatch { get; } = new();
 
+    public static bool UseNumRow { get; private set; }
+
     private static void Main()
     {
-
+        // Initialize the LED System.
         LedManager.Init();
 
+        // Ask about alternate input method.
+        Console.WriteLine("Press: <Backspace> to enable number row as input.");
+        Console.WriteLine("This will disable numpad.");
+        var key = Console.ReadKey(true);
+        if (key.Key is ConsoleKey.Backspace)
+        {
+            UseNumRow = true;
+            Console.WriteLine("Set NumRow");
+        }
+
+        // Run Tic-Tac-Toe in a loop.
         bool play;
         do
         {
@@ -21,6 +35,7 @@ internal class Program
 
         } while (play);
 
+        // Shutdown LED System.
         LedManager.Shutdown();
 
         PrintStatistics();
@@ -36,12 +51,13 @@ internal class Program
         game.Play();
         game.AnnounceWinner();
 
-        Console.WriteLine("\nPress <Enter> to play again.");
-        Console.WriteLine("Or anything else to exit.\n");
-        var key = Console.ReadKey(true).Key;
-        LedManager.StopEffectOnKey(KeyNames.NUM_ENTER);
+        Console.WriteLine();
+        Console.WriteLine(Resources.PlayAgainPrompt);
 
-        return key == ConsoleKey.Enter;
+        // Determine if the player wants to play again.
+        var key = Console.ReadKey(true).Key;
+        LedManager.StopEffects();
+        return key is ConsoleKey.Enter;
     }
 
     private static void PrintStatistics()
@@ -59,5 +75,8 @@ internal class Program
         Console.WriteLine($"Average Duration: {Statistics.AverageGameDuration:s\\:ff} s");
         Console.WriteLine($"Average Turns:    {Statistics.AverageTurnCount}");
         Console.WriteLine($"Your Starts:      {Statistics.XStartPercent:0}%");
+
+        Console.WriteLine(Resources.ExitPrompt);
+        Console.ReadKey(true);
     }
 }

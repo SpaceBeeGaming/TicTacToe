@@ -1,4 +1,6 @@
-﻿using TicTacToe.Board;
+﻿using System.Diagnostics;
+
+using TicTacToe.Board;
 using TicTacToe.Led;
 
 namespace TicTacToe;
@@ -6,15 +8,16 @@ namespace TicTacToe;
 public class Game
 {
     private readonly Statistics _statistics;
+    private readonly Stopwatch _stopwatch;
     private readonly GameBoard _board = new();
 
     public Players HumanPlayer { get; private set; }
 
-    public Game(Statistics statistics)
+    public Game(Statistics statistics, Stopwatch stopwatch)
     {
         _statistics = statistics;
+        _stopwatch = stopwatch;
     }
-
 
     public GameOverType Winner { get; private set; }
 
@@ -39,11 +42,13 @@ public class Game
         }
         int turnCountOffset = turnCounter;
 
+        _stopwatch.Restart();
         do
         {
             var status = _board.CheckForWinner();
             if (status.gameOver)
             {
+                _stopwatch.Stop();
                 SetGameOverType(status.winner);
                 break;
             }
@@ -62,6 +67,7 @@ public class Game
         } while (true);
 
         _statistics.AddTurnCount(turnCounter - turnCountOffset);
+        _statistics.AddGameDuration(_stopwatch.ElapsedMilliseconds);
     }
 
     public void AnnounceWinner()

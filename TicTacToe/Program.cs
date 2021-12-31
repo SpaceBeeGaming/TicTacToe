@@ -1,10 +1,13 @@
-﻿using TicTacToe.Led;
+﻿using System.Diagnostics;
+
+using TicTacToe.Led;
 
 namespace TicTacToe;
 
 internal class Program
 {
     public static Statistics Statistics { get; } = new();
+    public static Stopwatch Stopwatch { get; } = new();
 
     private static void Main()
     {
@@ -19,7 +22,7 @@ internal class Program
         } while (play);
 
         LedManager.Shutdown();
-        
+
         PrintStatistics();
 
         Console.WriteLine("Press any key to exit...");
@@ -28,7 +31,7 @@ internal class Program
 
     private static bool RunGame()
     {
-        Game game = new(Statistics);
+        Game game = new(Statistics, Stopwatch);
         game.Setup();
         game.Play();
         game.AnnounceWinner();
@@ -52,7 +55,9 @@ internal class Program
         Console.WriteLine($"Loss %: {Statistics.LossPercent:0}%");
         Console.WriteLine($"Tie %:  {Statistics.TiePercent:0}%");
         Console.WriteLine();
-        Console.WriteLine($"Average turns: {Statistics.AverageTurnCount}");
-        Console.WriteLine($"Your starts:   {Statistics.XStartPercent:0}%");
+        Console.WriteLine($"Total Duration:   {Statistics.TotalGameDuration:m\\:ss} min");
+        Console.WriteLine($"Average Duration: {Statistics.AverageGameDuration:s\\:ff} s");
+        Console.WriteLine($"Average Turns:    {Statistics.AverageTurnCount}");
+        Console.WriteLine($"Your Starts:      {Statistics.XStartPercent:0}%");
     }
 }

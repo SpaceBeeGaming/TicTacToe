@@ -46,6 +46,7 @@ internal class Program
 
     private static bool RunGame()
     {
+        // Game flow control.
         Game game = new(Statistics, Stopwatch);
         game.Setup();
         game.Play();

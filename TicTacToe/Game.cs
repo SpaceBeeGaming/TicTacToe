@@ -17,6 +17,11 @@ public class Game
 
     public Players HumanPlayer { get; private set; }
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="Game"/> class.
+    /// </summary>
+    /// <param name="statistics">Instance of the <see cref="Statistics"/> class to store the results into.</param>
+    /// <param name="stopwatch">Instance of the <see cref="Stopwatch"/> class to clock the game runs.</param>
     public Game(Statistics statistics, Stopwatch stopwatch)
     {
         _statistics = statistics;

@@ -19,6 +19,8 @@ internal class Program
         } while (play);
 
         LedManager.Shutdown();
+        
+        PrintStatistics();
 
         Console.WriteLine("Press any key to exit...");
         Console.ReadKey(true);
@@ -35,25 +37,22 @@ internal class Program
         Console.WriteLine("Or anything else to exit.\n");
         var key = Console.ReadKey(true).Key;
         LedManager.StopEffectOnKey(KeyNames.NUM_ENTER);
-        if (key == ConsoleKey.Enter)
-        {
-            return true;
-        }
-        else
-        {
-            Console.WriteLine($"Games:  {Statistics.GamesPlayed}");
-            Console.WriteLine($"Wins:   {Statistics.Wins}");
-            Console.WriteLine($"Losses: {Statistics.Losses}");
-            Console.WriteLine($"Ties:   {Statistics.Ties}");
-            Console.WriteLine();
-            Console.WriteLine($"Win %:  {Statistics.WinPercent:0}%");
-            Console.WriteLine($"Loss %: {Statistics.LossPercent:0}%");
-            Console.WriteLine($"Tie %:  {Statistics.TiePercent:0}%");
-            Console.WriteLine();
-            Console.WriteLine($"Average turns: {Statistics.AverageTurnCount}");
-            Console.WriteLine($"Your starts:   {Statistics.XStartPercent:0}%");
 
-            return false;
-        }
+        return key == ConsoleKey.Enter;
+    }
+
+    private static void PrintStatistics()
+    {
+        Console.WriteLine($"Games:  {Statistics.GamesPlayed}");
+        Console.WriteLine($"Wins:   {Statistics.Wins}");
+        Console.WriteLine($"Losses: {Statistics.Losses}");
+        Console.WriteLine($"Ties:   {Statistics.Ties}");
+        Console.WriteLine();
+        Console.WriteLine($"Win %:  {Statistics.WinPercent:0}%");
+        Console.WriteLine($"Loss %: {Statistics.LossPercent:0}%");
+        Console.WriteLine($"Tie %:  {Statistics.TiePercent:0}%");
+        Console.WriteLine();
+        Console.WriteLine($"Average turns: {Statistics.AverageTurnCount}");
+        Console.WriteLine($"Your starts:   {Statistics.XStartPercent:0}%");
     }
 }

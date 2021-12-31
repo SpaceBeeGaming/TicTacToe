@@ -1,4 +1,5 @@
 ﻿using TicTacToe.Led;
+using TicTacToe.Properties;
 
 namespace TicTacToe;
 
@@ -6,11 +7,24 @@ internal class Program
 {
     public static Statistics Statistics { get; } = new();
 
+    public static bool UseNumRow { get; private set; }
+
     private static void Main()
     {
-
+        // Initialize the LED System.
         LedManager.Init();
 
+        // Ask about alternate input method.
+        Console.WriteLine("Press: <Backspace> to enable number row as input.");
+        Console.WriteLine("This will disable numpad.");
+        var key = Console.ReadKey(true);
+        if (key.Key is ConsoleKey.Backspace)
+        {
+            UseNumRow = true;
+            Console.WriteLine("Set NumRow");
+        }
+
+        // Run Tic-Tac-Toe in a loop.
         bool play;
         do
         {
@@ -18,42 +32,40 @@ internal class Program
 
         } while (play);
 
+        // Shutdown LED System.
         LedManager.Shutdown();
 
-        Console.WriteLine("Press any key to exit...");
+        // Prints statistics about the session.
+        Console.WriteLine($"Games:  {Statistics.GamesPlayed}");
+        Console.WriteLine($"Wins:   {Statistics.Wins}");
+        Console.WriteLine($"Losses: {Statistics.Losses}");
+        Console.WriteLine($"Ties:   {Statistics.Ties}");
+        Console.WriteLine();
+        Console.WriteLine($"Win %:  {Statistics.WinPercent:0}%");
+        Console.WriteLine($"Loss %: {Statistics.LossPercent:0}%");
+        Console.WriteLine($"Tie %:  {Statistics.TiePercent:0}%");
+        Console.WriteLine();
+        Console.WriteLine($"Average turns: {Statistics.AverageTurnCount}");
+        Console.WriteLine($"Your starts:   {Statistics.XStartPercent:0}%");
+
+        Console.WriteLine(Resources.ExitPrompt);
         Console.ReadKey(true);
     }
 
     private static bool RunGame()
     {
+        // Game flow control.
         Game game = new(Statistics);
         game.Setup();
         game.Play();
         game.AnnounceWinner();
 
-        Console.WriteLine("\nPress <Enter> to play again.");
-        Console.WriteLine("Or anything else to exit.\n");
-        var key = Console.ReadKey(true).Key;
-        LedManager.StopEffectOnKey(KeyNames.NUM_ENTER);
-        if (key == ConsoleKey.Enter)
-        {
-            return true;
-        }
-        else
-        {
-            Console.WriteLine($"Games:  {Statistics.GamesPlayed}");
-            Console.WriteLine($"Wins:   {Statistics.Wins}");
-            Console.WriteLine($"Losses: {Statistics.Losses}");
-            Console.WriteLine($"Ties:   {Statistics.Ties}");
-            Console.WriteLine();
-            Console.WriteLine($"Win %:  {Statistics.WinPercent:0}%");
-            Console.WriteLine($"Loss %: {Statistics.LossPercent:0}%");
-            Console.WriteLine($"Tie %:  {Statistics.TiePercent:0}%");
-            Console.WriteLine();
-            Console.WriteLine($"Average turns: {Statistics.AverageTurnCount}");
-            Console.WriteLine($"Your starts:   {Statistics.XStartPercent:0}%");
+        Console.WriteLine();
+        Console.WriteLine(Resources.PlayAgainPrompt);
 
-            return false;
-        }
+        // Determine if the player wants to play again.
+        var key = Console.ReadKey(true).Key;
+        LedManager.StopEffects();
+        return key is ConsoleKey.Enter;
     }
 }

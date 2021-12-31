@@ -11,6 +11,7 @@ public enum DeviceTypes
 
 public enum KeyNames
 {
+#pragma warning disable CA1707 // Identifiers should not contain underscores
     ESC = 0x01,
     F1 = 0x3b,
     F2 = 0x3c,
@@ -126,4 +127,5 @@ public enum KeyNames
     G9 = 0xFFF9,
     G_LOGO = 0xFFFF1,
     G_BADGE = 0xFFFF2
+#pragma warning restore CA1707 // Identifiers should not contain underscores
 };

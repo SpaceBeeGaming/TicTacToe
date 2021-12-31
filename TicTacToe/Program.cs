@@ -1,4 +1,6 @@
-﻿using TicTacToe.Led;
+﻿using System.Diagnostics;
+
+using TicTacToe.Led;
 using TicTacToe.Properties;
 
 namespace TicTacToe;
@@ -6,6 +8,7 @@ namespace TicTacToe;
 internal class Program
 {
     public static Statistics Statistics { get; } = new();
+    public static Stopwatch Stopwatch { get; } = new();
 
     public static bool UseNumRow { get; private set; }
 
@@ -35,18 +38,7 @@ internal class Program
         // Shutdown LED System.
         LedManager.Shutdown();
 
-        // Prints statistics about the session.
-        Console.WriteLine($"Games:  {Statistics.GamesPlayed}");
-        Console.WriteLine($"Wins:   {Statistics.Wins}");
-        Console.WriteLine($"Losses: {Statistics.Losses}");
-        Console.WriteLine($"Ties:   {Statistics.Ties}");
-        Console.WriteLine();
-        Console.WriteLine($"Win %:  {Statistics.WinPercent:0}%");
-        Console.WriteLine($"Loss %: {Statistics.LossPercent:0}%");
-        Console.WriteLine($"Tie %:  {Statistics.TiePercent:0}%");
-        Console.WriteLine();
-        Console.WriteLine($"Average turns: {Statistics.AverageTurnCount}");
-        Console.WriteLine($"Your starts:   {Statistics.XStartPercent:0}%");
+        PrintStatistics();
 
         Console.WriteLine(Resources.ExitPrompt);
         Console.ReadKey(true);
@@ -55,7 +47,7 @@ internal class Program
     private static bool RunGame()
     {
         // Game flow control.
-        Game game = new(Statistics);
+        Game game = new(Statistics, Stopwatch);
         game.Setup();
         game.Play();
         game.AnnounceWinner();
@@ -67,5 +59,22 @@ internal class Program
         var key = Console.ReadKey(true).Key;
         LedManager.StopEffects();
         return key is ConsoleKey.Enter;
+    }
+
+    private static void PrintStatistics()
+    {
+        Console.WriteLine($"Games:  {Statistics.GamesPlayed}");
+        Console.WriteLine($"Wins:   {Statistics.Wins}");
+        Console.WriteLine($"Losses: {Statistics.Losses}");
+        Console.WriteLine($"Ties:   {Statistics.Ties}");
+        Console.WriteLine();
+        Console.WriteLine($"Win %:  {Statistics.WinPercent:0}%");
+        Console.WriteLine($"Loss %: {Statistics.LossPercent:0}%");
+        Console.WriteLine($"Tie %:  {Statistics.TiePercent:0}%");
+        Console.WriteLine();
+        Console.WriteLine($"Total Duration:   {Statistics.TotalGameDuration:m\\:ss} min");
+        Console.WriteLine($"Average Duration: {Statistics.AverageGameDuration:s\\:ff} s");
+        Console.WriteLine($"Average Turns:    {Statistics.AverageTurnCount}");
+        Console.WriteLine($"Your Starts:      {Statistics.XStartPercent:0}%");
     }
 }

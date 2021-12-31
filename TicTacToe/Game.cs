@@ -1,4 +1,6 @@
-﻿using TicTacToe.Board;
+﻿using System.Diagnostics;
+
+using TicTacToe.Board;
 using TicTacToe.Led;
 using TicTacToe.Properties;
 
@@ -10,6 +12,7 @@ namespace TicTacToe;
 public class Game
 {
     private readonly Statistics _statistics;
+    private readonly Stopwatch _stopwatch;
     private readonly GameBoard _board = new();
 
     public Players HumanPlayer { get; private set; }
@@ -18,9 +21,11 @@ public class Game
     /// Initializes a new instance of the <see cref="Game"/> class.
     /// </summary>
     /// <param name="statistics">Instance of the <see cref="Statistics"/> class to store the results into.</param>
-    public Game(Statistics statistics)
+    /// <param name="stopwatch">Instance of the <see cref="Stopwatch"/> class to clock the game runs.</param>
+    public Game(Statistics statistics, Stopwatch stopwatch)
     {
         _statistics = statistics;
+        _stopwatch = stopwatch;
     }
 
     public GameOverType Winner { get; private set; }
@@ -58,6 +63,7 @@ public class Game
         // Save the offset for later use.
         int turnCountOffset = turnCounter;
 
+        _stopwatch.Restart();
         do
         {
             // Get the current progress of the game.
@@ -66,6 +72,7 @@ public class Game
             // If the game has ended we set the result and break.
             if (status.gameOver)
             {
+                _stopwatch.Stop();
                 SetGameOverType(status.winner);
                 break;
             }
@@ -86,6 +93,7 @@ public class Game
 
         // Remove the added offset before submitting the turn count.
         _statistics.AddTurnCount(turnCounter - turnCountOffset);
+        _statistics.AddGameDuration(_stopwatch.ElapsedMilliseconds);
     }
 
     /// <summary>

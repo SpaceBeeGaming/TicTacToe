@@ -234,15 +234,15 @@ public partial class GameBoard
         }
     }
 
-    private IList<Line> GetLines(Players player, int numHits, bool shortCircuit = false)
+    public IList<Line> GetLines(Players player, int numHits, bool shortCircuit = false)
     {
         List<Line> lines = new();
 
         // Iterate over all the lines in the grid.
         foreach (var line in _lines)
         {
-            // Skip id it is already full.
-            if (line.IsFull)
+            // Skip if it is already full and we're not asking for complete rows.
+            if (line.IsFull && numHits != line.Boxes.Count())
             {
                 continue;
             }

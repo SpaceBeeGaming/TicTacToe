@@ -93,6 +93,11 @@ public class Game
     /// </summary>
     public void AnnounceWinner()
     {
+        if (Winner is not GameOverType.Tie)
+        {
+            LedManager.FlashWinningLine(Winner, _board);
+        }
+
         LedManager.FlashEnter(Winner);
         if (Winner is GameOverType.Tie)
         {
@@ -208,12 +213,7 @@ public class Game
     }
 
     private void SetGameOverType(Players? winner) =>
-        Winner = winner switch
-        {
-            Players.X => GameOverType.X,
-            Players.O => GameOverType.O,
-            _ => GameOverType.Tie,
-        };
+        Winner = EnumConverters.PlayersToGameOverTypeConverter(winner) ?? GameOverType.Tie;
 
     /// <summary>
     /// Returns the opposing player.

@@ -65,7 +65,7 @@ internal class Program
 
         // Determine if the player wants to play again.
         var key = Console.ReadKey(true).Key;
-        LedManager.StopEffectOnKey(KeyNames.NUM_ENTER);
+        LedManager.StopEffects();
         return key is ConsoleKey.Enter;
     }
 }

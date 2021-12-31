@@ -33,21 +33,22 @@ internal class LedManager
         switch (gameOverType)
         {
             case GameOverType.Tie:
-                LogiLED.FlashSingleKey(KeyNames.NUM_ENTER, Color.White, LogiLED.LOGI_LED_DURATION_INFINITE, 500);
+                FlashKey(KeyNames.NUM_ENTER, Color.White);
                 break;
             case GameOverType.X:
-                LogiLED.FlashSingleKey(KeyNames.NUM_ENTER, Color.Blue, LogiLED.LOGI_LED_DURATION_INFINITE, 500);
+                FlashKey(KeyNames.NUM_ENTER, Color.Blue);
                 break;
             case GameOverType.O:
-                LogiLED.FlashSingleKey(KeyNames.NUM_ENTER, Color.Red, LogiLED.LOGI_LED_DURATION_INFINITE, 500);
+                FlashKey(KeyNames.NUM_ENTER, Color.Red);
                 break;
         }
     }
 
     [Conditional("WINDOWS")]
-    public static void StopEffectOnKey(KeyNames key)
+    public static void StopEffects()
     {
-        LogiLED.StopEffectsOnKey(key);
+        LogiLED.StopEffects();
+
     }
 
     [Conditional("WINDOWS")]
@@ -62,5 +63,37 @@ internal class LedManager
     {
         LogiLED.RestoreLighting();
         LogiLED.Shutdown();
+    }
+
+    [Conditional("WINDOWS")]
+    public static void FlashWinningLine(GameOverType winner, GameBoard board)
+    {
+        Players? player = EnumConverters.GameOverTypeToPlayersConverter(winner);
+        if (player is not null)
+        {
+            Line? gameoverLine = board.GetLines((Players)player, 3, true).FirstOrDefault();
+            if (gameoverLine is not null)
+            {
+                List<KeyNames> keys = new();
+                foreach (Box box in gameoverLine.Boxes)
+                {
+                    keys.Add(board.GetKeyNameFromBox(box));
+                }
+
+                Task.Run(() => FlashKeysAsync(keys, BoxStateToColorConverter.GetColorForBox(gameoverLine.Boxes.First()), 500));
+            }
+        }
+    }
+
+    private static void FlashKey(KeyNames keyname, Color color, int intervalMS = 500) =>
+        LogiLED.FlashSingleKey(keyname, color, LogiLED.LOGI_LED_DURATION_INFINITE, intervalMS);
+
+    private static async Task FlashKeysAsync(IEnumerable<KeyNames> keys, Color color, int offsetMS = 0, int intervalMS = 500)
+    {
+        await Task.Delay(offsetMS);
+        foreach (KeyNames keyname in keys)
+        {
+            FlashKey(keyname, color, intervalMS);
+        }
     }
 }

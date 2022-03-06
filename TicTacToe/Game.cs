@@ -40,7 +40,10 @@ public class Game
 
         // Randomize which side the human player is.
         HumanPlayer = (Players)Random.Shared.Next(2);
-        Console.WriteLine($"You are: {HumanPlayer}");
+        if (Program.AIMode is false)
+        {
+            Console.WriteLine($"You are: {HumanPlayer}");
+        }
     }
 
     /// <summary>
@@ -80,11 +83,18 @@ public class Game
             // Alternate between the two players.
             if (turnCounter % 2 is 0)
             {
-                PlayerTurn(HumanPlayer);
+                if (Program.AIMode)
+                {
+                    AITurn(HumanPlayer);
+                }
+                else
+                {
+                    HumanTurn(HumanPlayer);
+                }
             }
             else
             {
-                OpponentTurn(GetOpposingPlayer(HumanPlayer));
+                AITurn(GetOpposingPlayer(HumanPlayer));
             }
 
             turnCounter++;
@@ -126,7 +136,7 @@ public class Game
         bool PlayerIsWinner() => (Winner is GameOverType.X && HumanPlayer is Players.X) || (Winner is GameOverType.O && HumanPlayer is Players.O);
     }
 
-    private void PlayerTurn(Players player)
+    private void HumanTurn(Players player)
     {
         bool result;
         do
@@ -167,7 +177,7 @@ public class Game
         } while (result is false);
     }
 
-    private void OpponentTurn(Players player)
+    private void AITurn(Players player)
     {
         Box? idealBox = null;
 

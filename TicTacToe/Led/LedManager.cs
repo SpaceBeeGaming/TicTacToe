@@ -68,20 +68,18 @@ internal class LedManager
     [Conditional("WINDOWS")]
     public static void FlashWinningLine(GameOverType winner, GameBoard board)
     {
-        Players? player = EnumConverters.GameOverTypeToPlayersConverter(winner);
-        if (player is not null)
-        {
-            Line? gameoverLine = board.GetLines((Players)player, 3, true).FirstOrDefault();
-            if (gameoverLine is not null)
-            {
-                List<KeyNames> keys = new();
-                foreach (Box box in gameoverLine.Boxes)
-                {
-                    keys.Add(board.GetKeyNameFromBox(box));
-                }
+        Players player = EnumConverters.GameOverTypeToPlayersConverter(winner);
 
-                Task.Run(() => FlashKeysAsync(keys, BoxStateToColorConverter.GetColorForBox(gameoverLine.Boxes.First()), 500));
+        Line? gameoverLine = board.GetLines(player, 3, true).FirstOrDefault();
+        if (gameoverLine is not null)
+        {
+            List<KeyNames> keys = new();
+            foreach (Box box in gameoverLine.Boxes)
+            {
+                keys.Add(board.GetKeyNameFromBox(box));
             }
+
+            Task.Run(() => FlashKeysAsync(keys, BoxStateToColorConverter.GetColorForBox(gameoverLine.Boxes.First()), 500));
         }
     }
 

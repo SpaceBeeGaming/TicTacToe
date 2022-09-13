@@ -15,6 +15,7 @@ public static class BoxStateToColorConverter
         {
             Players.X => _xColor,
             Players.O => _oColor,
-            _ => _emptyColor,
+        Players.Null => _emptyColor,
+        _ => throw new InvalidOperationException($"{box.Player} is not valid.")
         };
 }

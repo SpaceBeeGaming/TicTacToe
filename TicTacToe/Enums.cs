@@ -9,6 +9,7 @@ public enum GameOverType
 
 public enum Players
 {
+    Null,
     X,
     O
 }

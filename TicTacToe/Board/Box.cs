@@ -6,9 +6,9 @@ public class Box : IEquatable<Box>
 {
     public Point Location { get; }
 
-    public bool IsOccupied => Player.HasValue;
+    public bool IsOccupied => Player is not Players.Null;
 
-    public Players? Player { get; set; }
+    public Players Player { get; set; }
 
     public Box(int x, int y)
     {

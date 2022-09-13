@@ -220,8 +220,8 @@ public class Game
         _board.DrawPlayer(idealBox, player);
     }
 
-    private void SetGameOverType(Players? winner) =>
-        Winner = EnumConverters.PlayersToGameOverTypeConverter(winner) ?? GameOverType.Tie;
+    private void SetGameOverType(Players winner) =>
+        Winner = EnumConverters.PlayersToGameOverTypeConverter(winner);
 
     /// <summary>
     /// Returns the opposing player.

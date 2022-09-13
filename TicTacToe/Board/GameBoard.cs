@@ -124,7 +124,7 @@ public partial class GameBoard
     /// Determines if the game has ended and if there is a winner.
     /// </summary>
     /// <returns></returns>
-    public (bool gameOver, Players? winner) CheckForWinner()
+    public (bool gameOver, Players winner) CheckForWinner()
     {
         // Iterate over all the rows, columns and diagonals.
         foreach (var line in _lines)
@@ -145,11 +145,11 @@ public partial class GameBoard
         if (GetEmptyBoxes().Any() is false)
         {
             // We have a tie since the grid is full and we have no winners.
-            return (true, null);
+            return (true, Players.Null);
         }
 
         // Returns when there are empty boxes and no winners.
-        return (false, null);
+        return (false, Players.Null);
     }
 
     /// <summary>

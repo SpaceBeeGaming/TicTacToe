@@ -5,7 +5,7 @@ using TicTacToe.Board;
 
 namespace TicTacToe.Led;
 
-internal class LedManager
+internal static class LedManager
 {
     [Conditional("WINDOWS")]
     public static void Init()

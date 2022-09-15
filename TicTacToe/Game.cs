@@ -39,7 +39,7 @@ public class Game
         LedManager.SetDark();
 
         // Randomize which side the human player is.
-        HumanPlayer = (Players)Random.Shared.Next(2);
+        HumanPlayer = (Players)Random.Shared.Next(1, 3);
         Console.WriteLine($"You are: {HumanPlayer}");
     }
 

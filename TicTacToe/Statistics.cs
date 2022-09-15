@@ -1,6 +1,6 @@
 ﻿namespace TicTacToe;
 
-public class Statistics
+public sealed class Statistics
 {
     private readonly List<int> _turnCounts = new();
     private readonly List<long> _gameDurationsMS = new();

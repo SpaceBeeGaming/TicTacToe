@@ -2,7 +2,7 @@
 
 namespace TicTacToe.Board;
 
-public class Box : IEquatable<Box>
+public sealed class Box : IEquatable<Box>
 {
     public Point Location { get; }
 

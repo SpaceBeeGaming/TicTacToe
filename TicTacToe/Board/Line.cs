@@ -1,6 +1,6 @@
 ﻿namespace TicTacToe.Board;
 
-public class Line
+public sealed class Line
 {
     public IEnumerable<Box> Boxes { get; set; }
 

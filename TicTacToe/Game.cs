@@ -9,7 +9,7 @@ namespace TicTacToe;
 /// <summary>
 /// Contains the logic for running a game of Tic-Tac-Toe.
 /// </summary>
-public class Game
+public sealed class Game
 {
     private readonly Statistics _statistics;
     private readonly Stopwatch _stopwatch;

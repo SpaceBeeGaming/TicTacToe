@@ -29,16 +29,6 @@ public partial class GameBoard
     private readonly Box _box8 = new(6, 5);
     private readonly Box _box9 = new(10, 5);
 
-    private readonly Line _row1;
-    private readonly Line _row2;
-    private readonly Line _row3;
-
-    private readonly Line _col1;
-    private readonly Line _col2;
-    private readonly Line _col3;
-
-    private readonly Line _diag1;
-    private readonly Line _diag2;
     #endregion
 
     public GameBoard()
@@ -48,22 +38,18 @@ public partial class GameBoard
             _box1, _box2, _box3, _box4, _box5, _box6, _box7, _box8, _box9
         };
 
-        _row1 = new Line(_box1, _box2, _box3);
-        _row2 = new Line(_box4, _box5, _box6);
-        _row3 = new Line(_box7, _box8, _box9);
-
-        _col1 = new Line(_box1, _box4, _box7);
-        _col2 = new Line(_box2, _box5, _box8);
-        _col3 = new Line(_box3, _box6, _box9);
-
-        _diag1 = new Line(_box1, _box5, _box9);
-        _diag2 = new Line(_box3, _box5, _box7);
-
         _lines = new List<Line>()
         {
-            _row1, _row2, _row3,
-            _col1, _col2, _col3,
-            _diag1, _diag2
+            new Line(_box1, _box2, _box3), // Row 1
+            new Line(_box4, _box5, _box6), // Row 2
+            new Line(_box7, _box8, _box9), // Row 3
+
+            new Line(_box1, _box4, _box7), // Col 1
+            new Line(_box2, _box5, _box8), // Col 2
+            new Line(_box3, _box6, _box9), // Col 3
+
+            new Line(_box1, _box5, _box9), // Diag -
+            new Line(_box3, _box5, _box7), // Diag +
         };
     }
 

@@ -6,16 +6,16 @@ public partial class GameBoard
 {
     #region Private Fields
     private (int x, int y) _boardOffset;
-    private readonly string[] _grid = new string[]
-    {
-        "┌───┬───┬───┐",
-        "│   │   │   │",
-        "├───┼───┼───┤",
-        "│   │   │   │",
-        "├───┼───┼───┤",
-        "│   │   │   │",
-        "└───┴───┴───┘"
-    };
+    private readonly string _grid =
+        """
+        ┌───┬───┬───┐
+        │   │   │   │
+        ├───┼───┼───┤
+        │   │   │   │
+        ├───┼───┼───┤
+        │   │   │   │
+        └───┴───┴───┘
+        """;
     private readonly List<Box> _boxes;
     private readonly List<Line> _lines;
     #endregion
@@ -65,10 +65,7 @@ public partial class GameBoard
     {
         // Draw the game board and save the cursor offset.
         _boardOffset = System.Console.GetCursorPosition();
-        for (var i = 0; i < _grid.Length; i++)
-        {
-            System.Console.WriteLine(_grid[i]);
-        }
+        System.Console.WriteLine(_grid);
     }
 
     /// <summary>

@@ -41,6 +41,8 @@ internal static class LedManager
             case GameOverType.O:
                 FlashKey(KeyNames.NUM_ENTER, Color.Red);
                 break;
+            default:
+                throw new InvalidOperationException();
         }
     }
 

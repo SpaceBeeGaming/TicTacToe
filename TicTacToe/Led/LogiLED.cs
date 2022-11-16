@@ -102,9 +102,6 @@ internal static partial class LogiLED
     [return: MarshalAs(UnmanagedType.Bool)]
     public static partial bool SetLightingForKeyWithKeyName(KeyNames keyCode, int redPercentage, int greenPercentage, int bluePercentage);
 
-    public static bool SetLightingForKeyWithKeyName(KeyNames keyCode, Color color) =>
-        SetLightingForKeyWithKeyName(keyCode, (int)Math.Round(color.R / 255.0 * 100), (int)Math.Round(color.G / 255.0 * 100), (int)Math.Round(color.B / 255.0 * 100));
-
     [LibraryImport("LogitechLedEnginesWrapper", EntryPoint = "LogiLedSaveLightingForKey")]
     [UnmanagedCallConv(CallConvs = new Type[] { typeof(System.Runtime.CompilerServices.CallConvCdecl) })]
     [return: MarshalAs(UnmanagedType.Bool)]
@@ -114,8 +111,6 @@ internal static partial class LogiLED
     [UnmanagedCallConv(CallConvs = new Type[] { typeof(System.Runtime.CompilerServices.CallConvCdecl) })]
     [return: MarshalAs(UnmanagedType.Bool)]
     public static partial bool RestoreLightingForKey(KeyNames keyName);
-    public static void FlashSingleKey(KeyNames keyName, Color color, int msDuration, int msInterval) =>
-        FlashSingleKey(keyName, (int)Math.Round(color.R / 255.0 * 100), (int)Math.Round(color.G / 255.0 * 100), (int)Math.Round(color.B / 255.0 * 100), msDuration, msInterval);
 
     [LibraryImport("LogitechLedEnginesWrapper", EntryPoint = "LogiLedFlashSingleKey")]
     [UnmanagedCallConv(CallConvs = new Type[] { typeof(System.Runtime.CompilerServices.CallConvCdecl) })]
@@ -140,4 +135,11 @@ internal static partial class LogiLED
     [LibraryImport("LogitechLedEnginesWrapper", EntryPoint = "LogiLedShutdown")]
     [UnmanagedCallConv(CallConvs = new Type[] { typeof(System.Runtime.CompilerServices.CallConvCdecl) })]
     public static partial void Shutdown();
+
+    // Custom Overloads.
+    public static bool SetLightingForKeyWithKeyName(KeyNames keyCode, Color color) =>
+        SetLightingForKeyWithKeyName(keyCode, (int)Math.Round(color.R / 255.0 * 100), (int)Math.Round(color.G / 255.0 * 100), (int)Math.Round(color.B / 255.0 * 100));
+
+    public static void FlashSingleKey(KeyNames keyName, Color color, int msDuration, int msInterval) =>
+        FlashSingleKey(keyName, (int)Math.Round(color.R / 255.0 * 100), (int)Math.Round(color.G / 255.0 * 100), (int)Math.Round(color.B / 255.0 * 100), msDuration, msInterval);
 }

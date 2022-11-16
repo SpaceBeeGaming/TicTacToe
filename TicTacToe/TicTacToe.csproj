@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
 		<OutputType>Exe</OutputType>
-		<TargetFramework>net6.0</TargetFramework>
+		<TargetFramework>net7.0</TargetFramework>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
 		<StartupObject>TicTacToe.Program</StartupObject>
@@ -26,6 +26,8 @@
 		<GeneratePackageOnBuild>False</GeneratePackageOnBuild>
 		<Description>Tic-Tac-Toe Playable in terminal.</Description>
 		<Configurations>Debug;Release</Configurations>
+		<AnalysisLevel>latest-recommended</AnalysisLevel>
+		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">

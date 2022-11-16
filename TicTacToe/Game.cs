@@ -9,7 +9,7 @@ namespace TicTacToe;
 /// <summary>
 /// Contains the logic for running a game of Tic-Tac-Toe.
 /// </summary>
-public class Game
+public sealed class Game
 {
     private readonly Statistics _statistics;
     private readonly Stopwatch _stopwatch;
@@ -39,7 +39,7 @@ public class Game
         LedManager.SetDark();
 
         // Randomize which side the human player is.
-        HumanPlayer = (Players)Random.Shared.Next(2);
+        HumanPlayer = (Players)Random.Shared.Next(1, 3);
         Console.WriteLine($"You are: {HumanPlayer}");
     }
 
@@ -220,8 +220,8 @@ public class Game
         _board.DrawPlayer(idealBox, player);
     }
 
-    private void SetGameOverType(Players? winner) =>
-        Winner = EnumConverters.PlayersToGameOverTypeConverter(winner) ?? GameOverType.Tie;
+    private void SetGameOverType(Players winner) =>
+        Winner = EnumConverters.PlayersToGameOverTypeConverter(winner);
 
     /// <summary>
     /// Returns the opposing player.

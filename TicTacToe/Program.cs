@@ -5,7 +5,7 @@ using TicTacToe.Properties;
 
 namespace TicTacToe;
 
-internal class Program
+internal static class Program
 {
     public static Statistics Statistics { get; } = new();
     public static Stopwatch Stopwatch { get; } = new();

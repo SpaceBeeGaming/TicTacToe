@@ -361,3 +361,6 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+/TicTacToe/Properties/PublishProfiles/osx-x64.pubxml
+/TicTacToe/Properties/PublishProfiles/windows-x64.pubxml
+/TicTacToe/Properties/PublishProfiles/windows-x86.pubxml

@@ -19,7 +19,7 @@
 		<Product>Console Tic-Tac-Toe</Product>
 		<Company>SpaceBeeGaming</Company>
 		<Authors>SpaceBeeGaming</Authors>
-		<Version>1.3.0</Version>
+		<Version>1.4.0</Version>
 		<NeutralLanguage>en-FI</NeutralLanguage>
 		<Copyright>Copyright (c) 2021 SpaceBeeGaming</Copyright>
 		<RepositoryUrl>https://github.com/SpaceBeeGaming/TicTacToe</RepositoryUrl>

@@ -27,6 +27,7 @@
 		<Description>Tic-Tac-Toe Playable in terminal.</Description>
 		<Configurations>Debug;Release</Configurations>
 		<AnalysisLevel>latest-recommended</AnalysisLevel>
+		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">

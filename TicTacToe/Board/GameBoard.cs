@@ -16,23 +16,22 @@ public partial class GameBoard
         "│   │   │   │",
         "└───┴───┴───┘"
     };
-    private readonly IEnumerable<Box> _boxes;
-    private readonly IEnumerable<Line> _lines;
-
-    private readonly Box _box1 = new(2, 1);
-    private readonly Box _box2 = new(6, 1);
-    private readonly Box _box3 = new(10, 1);
-    private readonly Box _box4 = new(2, 3);
-    private readonly Box _box5 = new(6, 3);
-    private readonly Box _box6 = new(10, 3);
-    private readonly Box _box7 = new(2, 5);
-    private readonly Box _box8 = new(6, 5);
-    private readonly Box _box9 = new(10, 5);
-
+    private readonly List<Box> _boxes;
+    private readonly List<Line> _lines;
     #endregion
 
     public GameBoard()
     {
+        Box _box1 = new(2, 1);
+        Box _box2 = new(6, 1);
+        Box _box3 = new(10, 1);
+        Box _box4 = new(2, 3);
+        Box _box5 = new(6, 3);
+        Box _box6 = new(10, 3);
+        Box _box7 = new(2, 5);
+        Box _box8 = new(6, 5);
+        Box _box9 = new(10, 5);
+
         _boxes = new List<Box>()
         {
             _box1, _box2, _box3, _box4, _box5, _box6, _box7, _box8, _box9
@@ -156,17 +155,31 @@ public partial class GameBoard
 
     public Box GetBox(Boxes box) => box switch
     {
-        Boxes.B1 => _box1,
-        Boxes.B2 => _box2,
-        Boxes.B3 => _box3,
-        Boxes.B4 => _box4,
-        Boxes.B5 => _box5,
-        Boxes.B6 => _box6,
-        Boxes.B7 => _box7,
-        Boxes.B8 => _box8,
-        Boxes.B9 => _box9,
-        _ => throw new InvalidOperationException("Cannot convert null into a Box."),
+        Boxes.B1 => _boxes[0], // Box 1
+        Boxes.B2 => _boxes[1], // Box 2
+        Boxes.B3 => _boxes[2], // Box 3
+        Boxes.B4 => _boxes[3], // Box 4
+        Boxes.B5 => _boxes[4], // Box 5
+        Boxes.B6 => _boxes[5], // Box 6
+        Boxes.B7 => _boxes[6], // Box 7
+        Boxes.B8 => _boxes[7], // Box 8
+        Boxes.B9 => _boxes[8], // Box 9
+        _ => throw new ArgumentException("Cannot convert into a Box.", nameof(box)), // Error
     };
+
+    public Boxes GetBox(Box box)
+    {
+        return box == _boxes[0] ? Boxes.B1 // Box 1
+             : box == _boxes[1] ? Boxes.B2 // Box 2
+             : box == _boxes[2] ? Boxes.B3 // Box 3
+             : box == _boxes[3] ? Boxes.B4 // Box 4
+             : box == _boxes[4] ? Boxes.B5 // Box 5
+             : box == _boxes[5] ? Boxes.B6 // Box 6
+             : box == _boxes[6] ? Boxes.B7 // Box 7
+             : box == _boxes[7] ? Boxes.B8 // Box 8
+             : box == _boxes[8] ? Boxes.B9 // Box 9
+             : throw new ArgumentException("Unknown Box.", nameof(box)); // Error
+    }
 
     /// <summary>
     /// Maps the boxes to <see cref="KeyNames"/> enum for use by the LED System.
@@ -174,61 +187,29 @@ public partial class GameBoard
     /// <param name="box">The instance of <see cref="Box"/> to get the key for.</param>
     /// <returns>The key associated with that box.</returns>
     /// <exception cref="ArgumentException">Thrown if the <paramref name="box"/> was unexpected.</exception>
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0046:Convert to conditional expression", Justification = "This would make the result quite unreadable.")]
-    public KeyNames GetKeyNameFromBox(Box box)
+    public KeyNames GetKeyNameFromBox(Box box) => GetBox(box) switch
     {
-        // Maps the boxes to their respective keys on the NumPad.
-        if (box == _box1)
-        {
-            return KeyNames.NumPad7;
-        }
-        else if (box == _box2)
-        {
-            return KeyNames.NumPad8;
-        }
-        else if (box == _box3)
-        {
-            return KeyNames.NumPad9;
-        }
-        else if (box == _box4)
-        {
-            return KeyNames.NumPad4;
-        }
-        else if (box == _box5)
-        {
-            return KeyNames.NumPad5;
-        }
-        else if (box == _box6)
-        {
-            return KeyNames.NumPad6;
-        }
-        else if (box == _box7)
-        {
-            return KeyNames.NumPad1;
-        }
-        else if (box == _box8)
-        {
-            return KeyNames.NumPad2;
-        }
-        else if (box == _box9)
-        {
-            return KeyNames.NumPad3;
-        }
-        else
-        {
-            throw new ArgumentException("Unknown Box.", nameof(box));
-        }
-    }
+        Boxes.B1 => KeyNames.NumPad7,
+        Boxes.B2 => KeyNames.NumPad8,
+        Boxes.B3 => KeyNames.NumPad9,
+        Boxes.B4 => KeyNames.NumPad4,
+        Boxes.B5 => KeyNames.NumPad5,
+        Boxes.B6 => KeyNames.NumPad6,
+        Boxes.B7 => KeyNames.NumPad1,
+        Boxes.B8 => KeyNames.NumPad2,
+        Boxes.B9 => KeyNames.NumPad3,
+        _ => throw new ArgumentException("Unknown box.", nameof(box))
+    };
 
     public IList<Line> GetLines(Players player, int numHits, bool shortCircuit = false)
     {
         List<Line> lines = new();
 
         // Iterate over all the lines in the grid.
-        foreach (var line in _lines)
+        foreach (Line line in _lines)
         {
             // Skip if it is already full and we're not asking for complete rows.
-            if (line.IsFull && numHits != line.Boxes.Count())
+            if (line.IsFull && numHits != line.Boxes.Count)
             {
                 continue;
             }

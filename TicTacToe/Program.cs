@@ -63,18 +63,20 @@ internal static class Program
 
     private static void PrintStatistics()
     {
-        Console.WriteLine($"Games:  {Statistics.GamesPlayed}");
-        Console.WriteLine($"Wins:   {Statistics.Wins}");
-        Console.WriteLine($"Losses: {Statistics.Losses}");
-        Console.WriteLine($"Ties:   {Statistics.Ties}");
-        Console.WriteLine();
-        Console.WriteLine($"Win %:  {Statistics.WinPercent:0}%");
-        Console.WriteLine($"Loss %: {Statistics.LossPercent:0}%");
-        Console.WriteLine($"Tie %:  {Statistics.TiePercent:0}%");
-        Console.WriteLine();
-        Console.WriteLine($"Total Duration:   {Statistics.TotalGameDuration:m\\:ss} min");
-        Console.WriteLine($"Average Duration: {Statistics.AverageGameDuration:s\\:ff} s");
-        Console.WriteLine($"Average Turns:    {Statistics.AverageTurnCount}");
-        Console.WriteLine($"Your Starts:      {Statistics.XStartPercent:0}%");
+        Console.WriteLine($"""
+        Games:  {Statistics.GamesPlayed}
+        Wins:   {Statistics.Wins}
+        Losses: {Statistics.Losses}
+        Ties:   {Statistics.Ties}
+        
+        Win %:  {Statistics.WinPercent:0}%
+        Loss %: {Statistics.LossPercent:0}%
+        Tie %:  {Statistics.TiePercent:0}%
+        
+        Total Duration:   {Statistics.TotalGameDuration:m\:ss} min
+        Average Duration: {Statistics.AverageGameDuration:s\:ff} s
+        Average Turns:    {Statistics.AverageTurnCount}
+        Your Starts:      {Statistics.XStartPercent:0}%
+        """);
     }
 }

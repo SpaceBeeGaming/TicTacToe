@@ -9,24 +9,18 @@ namespace TicTacToe;
 /// <summary>
 /// Contains the logic for running a game of Tic-Tac-Toe.
 /// </summary>
-public sealed class Game
+/// <remarks>
+/// Initializes a new instance of the <see cref="Game"/> class.
+/// </remarks>
+/// <param name="statistics">Instance of the <see cref="Statistics"/> class to store the results into.</param>
+/// <param name="stopwatch">Instance of the <see cref="Stopwatch"/> class to clock the game runs.</param>
+public sealed class Game(Statistics statistics, Stopwatch stopwatch)
 {
-    private readonly Statistics _statistics;
-    private readonly Stopwatch _stopwatch;
-    private readonly GameBoard _board = new();
+    private readonly Statistics statistics = statistics;
+    private readonly Stopwatch stopwatch = stopwatch;
+    private readonly GameBoard board = new();
 
     public Players HumanPlayer { get; private set; }
-
-    /// <summary>
-    /// Initializes a new instance of the <see cref="Game"/> class.
-    /// </summary>
-    /// <param name="statistics">Instance of the <see cref="Statistics"/> class to store the results into.</param>
-    /// <param name="stopwatch">Instance of the <see cref="Stopwatch"/> class to clock the game runs.</param>
-    public Game(Statistics statistics, Stopwatch stopwatch)
-    {
-        _statistics = statistics;
-        _stopwatch = stopwatch;
-    }
 
     public GameOverType Winner { get; private set; }
 
@@ -35,7 +29,7 @@ public sealed class Game
     /// </summary>
     public void Setup()
     {
-        _board.DrawBoard();
+        board.DrawBoard();
         LedManager.SetDark();
 
         // Randomize which side the human player is.
@@ -57,22 +51,22 @@ public sealed class Game
         }
         else
         {
-            _statistics.AddXStart();
+            statistics.AddXStart();
         }
 
         // Save the offset for later use.
         int turnCountOffset = turnCounter;
 
-        _stopwatch.Restart();
+        stopwatch.Restart();
         do
         {
             // Get the current progress of the game.
-            var status = _board.CheckForWinner();
+            var status = board.CheckForWinner();
 
             // If the game has ended we set the result and break.
             if (status.gameOver)
             {
-                _stopwatch.Stop();
+                stopwatch.Stop();
                 SetGameOverType(status.winner);
                 break;
             }
@@ -92,8 +86,8 @@ public sealed class Game
         } while (true);
 
         // Remove the added offset before submitting the turn count.
-        _statistics.AddTurnCount(turnCounter - turnCountOffset);
-        _statistics.AddGameDuration(_stopwatch.ElapsedMilliseconds);
+        statistics.AddTurnCount(turnCounter - turnCountOffset);
+        statistics.AddGameDuration(stopwatch.ElapsedMilliseconds);
     }
 
     /// <summary>
@@ -103,24 +97,24 @@ public sealed class Game
     {
         if (Winner is not GameOverType.Tie)
         {
-            LedManager.FlashWinningLine(Winner, _board);
+            LedManager.FlashWinningLine(Winner, board);
         }
 
         LedManager.FlashEnter(Winner);
         if (Winner is GameOverType.Tie)
         {
             Console.WriteLine(Resources.Tie);
-            _statistics.AddTie();
+            statistics.AddTie();
         }
         else if (PlayerIsWinner())
         {
             Console.WriteLine(Resources.PlayerWin);
-            _statistics.AddWin();
+            statistics.AddWin();
         }
         else
         {
             Console.WriteLine(Resources.PlayerLoss);
-            _statistics.AddLoss();
+            statistics.AddLoss();
         }
 
         bool PlayerIsWinner() => (Winner is GameOverType.X && HumanPlayer is Players.X) || (Winner is GameOverType.O && HumanPlayer is Players.O);
@@ -138,29 +132,29 @@ public sealed class Game
                 // Using Number row as input. Assuming that the user doesn't have a Numpad.
                 true => key switch
                 {
-                    ConsoleKey.D1 => _board.DrawPlayer(Boxes.B1, player),
-                    ConsoleKey.D2 => _board.DrawPlayer(Boxes.B2, player),
-                    ConsoleKey.D3 => _board.DrawPlayer(Boxes.B3, player),
-                    ConsoleKey.D4 => _board.DrawPlayer(Boxes.B4, player),
-                    ConsoleKey.D5 => _board.DrawPlayer(Boxes.B5, player),
-                    ConsoleKey.D6 => _board.DrawPlayer(Boxes.B6, player),
-                    ConsoleKey.D7 => _board.DrawPlayer(Boxes.B7, player),
-                    ConsoleKey.D8 => _board.DrawPlayer(Boxes.B8, player),
-                    ConsoleKey.D9 => _board.DrawPlayer(Boxes.B9, player),
+                    ConsoleKey.D1 => board.DrawPlayer(Boxes.B1, player),
+                    ConsoleKey.D2 => board.DrawPlayer(Boxes.B2, player),
+                    ConsoleKey.D3 => board.DrawPlayer(Boxes.B3, player),
+                    ConsoleKey.D4 => board.DrawPlayer(Boxes.B4, player),
+                    ConsoleKey.D5 => board.DrawPlayer(Boxes.B5, player),
+                    ConsoleKey.D6 => board.DrawPlayer(Boxes.B6, player),
+                    ConsoleKey.D7 => board.DrawPlayer(Boxes.B7, player),
+                    ConsoleKey.D8 => board.DrawPlayer(Boxes.B8, player),
+                    ConsoleKey.D9 => board.DrawPlayer(Boxes.B9, player),
                     _ => false,
                 },
                 // Using Numpad as input.
                 _ => key switch
                 {
-                    ConsoleKey.NumPad7 => _board.DrawPlayer(Boxes.B1, player),
-                    ConsoleKey.NumPad8 => _board.DrawPlayer(Boxes.B2, player),
-                    ConsoleKey.NumPad9 => _board.DrawPlayer(Boxes.B3, player),
-                    ConsoleKey.NumPad4 => _board.DrawPlayer(Boxes.B4, player),
-                    ConsoleKey.NumPad5 => _board.DrawPlayer(Boxes.B5, player),
-                    ConsoleKey.NumPad6 => _board.DrawPlayer(Boxes.B6, player),
-                    ConsoleKey.NumPad1 => _board.DrawPlayer(Boxes.B7, player),
-                    ConsoleKey.NumPad2 => _board.DrawPlayer(Boxes.B8, player),
-                    ConsoleKey.NumPad3 => _board.DrawPlayer(Boxes.B9, player),
+                    ConsoleKey.NumPad7 => board.DrawPlayer(Boxes.B1, player),
+                    ConsoleKey.NumPad8 => board.DrawPlayer(Boxes.B2, player),
+                    ConsoleKey.NumPad9 => board.DrawPlayer(Boxes.B3, player),
+                    ConsoleKey.NumPad4 => board.DrawPlayer(Boxes.B4, player),
+                    ConsoleKey.NumPad5 => board.DrawPlayer(Boxes.B5, player),
+                    ConsoleKey.NumPad6 => board.DrawPlayer(Boxes.B6, player),
+                    ConsoleKey.NumPad1 => board.DrawPlayer(Boxes.B7, player),
+                    ConsoleKey.NumPad2 => board.DrawPlayer(Boxes.B8, player),
+                    ConsoleKey.NumPad3 => board.DrawPlayer(Boxes.B9, player),
                     _ => false,
                 },
             };
@@ -172,7 +166,7 @@ public sealed class Game
         Box? idealBox = null;
 
         // Check if we have a line which is one away from a win.
-        var winningLine = _board.GetWinningLine(player);
+        var winningLine = board.GetWinningLine(player);
         if (winningLine is not null)
         {
             // Set the missing box as the ideal target.
@@ -184,11 +178,11 @@ public sealed class Game
         if (idealBox is null)
         {
             // Check if we have any lines where the opponent is one away from winning.
-            var dangerousLines = _board.GetDangerousLines(player);
+            var dangerousLines = board.GetDangerousLines(player);
 
             if (dangerousLines.Count is not 0)
             {
-                List<Box> priorityBoxes = new();
+                List<Box> priorityBoxes = [];
 
                 // Iterate over all the lines founds to be dangerous.
                 foreach (var line in dangerousLines)
@@ -210,14 +204,14 @@ public sealed class Game
         if (idealBox is null)
         {
             // Get a list of all empty boxes.
-            var boxes = _board.GetEmptyBoxes().ToList();
+            var boxes = board.GetEmptyBoxes().ToList();
 
             // Select the target randomly.
             idealBox = boxes[Random.Shared.Next(boxes.Count)];
 
         }
 
-        _board.DrawPlayer(idealBox, player);
+        board.DrawPlayer(idealBox, player);
     }
 
     private void SetGameOverType(Players winner) =>

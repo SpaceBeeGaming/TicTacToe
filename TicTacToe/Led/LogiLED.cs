@@ -1,4 +1,5 @@
 ﻿using System.Drawing;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 namespace TicTacToe.Led;
@@ -23,117 +24,117 @@ internal static partial class LogiLED
     public const int LOGI_LED_DURATION_INFINITE = 0;
 
     [LibraryImport("LogitechLedEnginesWrapper", EntryPoint = "LogiLedInit")]
-    [UnmanagedCallConv(CallConvs = new Type[] { typeof(System.Runtime.CompilerServices.CallConvCdecl) })]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     [return: MarshalAs(UnmanagedType.Bool)]
     public static partial bool Init();
 
     [LibraryImport("LogitechLedEnginesWrapper", EntryPoint = "LogiLedInitWithName", StringMarshalling = StringMarshalling.Utf16)]
-    [UnmanagedCallConv(CallConvs = new Type[] { typeof(System.Runtime.CompilerServices.CallConvCdecl) })]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     [return: MarshalAs(UnmanagedType.Bool)]
     public static partial bool Init(string name);
 
     [LibraryImport("LogitechLedEnginesWrapper", EntryPoint = "LogiLedSetTargetDevice")]
-    [UnmanagedCallConv(CallConvs = new Type[] { typeof(System.Runtime.CompilerServices.CallConvCdecl) })]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     [return: MarshalAs(UnmanagedType.Bool)]
     public static partial bool SetTargetDevice(int targetDevice);
 
     [LibraryImport("LogitechLedEnginesWrapper", EntryPoint = "LogiLedGetSdkVersion")]
-    [UnmanagedCallConv(CallConvs = new Type[] { typeof(System.Runtime.CompilerServices.CallConvCdecl) })]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     [return: MarshalAs(UnmanagedType.Bool)]
     public static partial bool GetSdkVersion(ref int majorNum, ref int minorNum, ref int buildNum);
 
     [LibraryImport("LogitechLedEnginesWrapper", EntryPoint = "LogiLedSaveCurrentLighting")]
-    [UnmanagedCallConv(CallConvs = new Type[] { typeof(System.Runtime.CompilerServices.CallConvCdecl) })]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     [return: MarshalAs(UnmanagedType.Bool)]
     public static partial bool SaveCurrentLighting();
 
     [LibraryImport("LogitechLedEnginesWrapper", EntryPoint = "LogiLedSetLighting")]
-    [UnmanagedCallConv(CallConvs = new Type[] { typeof(System.Runtime.CompilerServices.CallConvCdecl) })]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     [return: MarshalAs(UnmanagedType.Bool)]
     public static partial bool SetLighting(int redPercentage, int greenPercentage, int bluePercentage);
 
     [LibraryImport("LogitechLedEnginesWrapper", EntryPoint = "LogiLedRestoreLighting")]
-    [UnmanagedCallConv(CallConvs = new Type[] { typeof(System.Runtime.CompilerServices.CallConvCdecl) })]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     [return: MarshalAs(UnmanagedType.Bool)]
     public static partial bool RestoreLighting();
 
     [LibraryImport("LogitechLedEnginesWrapper", EntryPoint = "LogiLedFlashLighting")]
-    [UnmanagedCallConv(CallConvs = new Type[] { typeof(System.Runtime.CompilerServices.CallConvCdecl) })]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     [return: MarshalAs(UnmanagedType.Bool)]
     public static partial bool FlashLighting(int redPercentage, int greenPercentage, int bluePercentage, int milliSecondsDuration, int milliSecondsInterval);
 
     [LibraryImport("LogitechLedEnginesWrapper", EntryPoint = "LogiLedPulseLighting")]
-    [UnmanagedCallConv(CallConvs = new Type[] { typeof(System.Runtime.CompilerServices.CallConvCdecl) })]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     [return: MarshalAs(UnmanagedType.Bool)]
     public static partial bool PulseLighting(int redPercentage, int greenPercentage, int bluePercentage, int milliSecondsDuration, int milliSecondsInterval);
 
     [LibraryImport("LogitechLedEnginesWrapper", EntryPoint = "LogiLedStopEffects")]
-    [UnmanagedCallConv(CallConvs = new Type[] { typeof(System.Runtime.CompilerServices.CallConvCdecl) })]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     [return: MarshalAs(UnmanagedType.Bool)]
     public static partial bool StopEffects();
 
     [LibraryImport("LogitechLedEnginesWrapper", EntryPoint = "LogiLedExcludeKeysFromBitmap")]
-    [UnmanagedCallConv(CallConvs = new Type[] { typeof(System.Runtime.CompilerServices.CallConvCdecl) })]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     [return: MarshalAs(UnmanagedType.Bool)]
-    public static partial bool ExcludeKeysFromBitmap(KeyNames[] keyList, int listCount);
+    public static partial bool ExcludeKeysFromBitmap(in KeyNames[] keyList, int listCount);
 
     [LibraryImport("LogitechLedEnginesWrapper", EntryPoint = "LogiLedSetLightingFromBitmap")]
-    [UnmanagedCallConv(CallConvs = new Type[] { typeof(System.Runtime.CompilerServices.CallConvCdecl) })]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     [return: MarshalAs(UnmanagedType.Bool)]
-    public static partial bool SetLightingFromBitmap(byte[] bitmap);
+    public static partial bool SetLightingFromBitmap(in byte[] bitmap);
 
     [LibraryImport("LogitechLedEnginesWrapper", EntryPoint = "LogiLedSetLightingForKeyWithScanCode")]
-    [UnmanagedCallConv(CallConvs = new Type[] { typeof(System.Runtime.CompilerServices.CallConvCdecl) })]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     [return: MarshalAs(UnmanagedType.Bool)]
     public static partial bool SetLightingForKeyWithScanCode(int keyCode, int redPercentage, int greenPercentage, int bluePercentage);
 
     [LibraryImport("LogitechLedEnginesWrapper", EntryPoint = "LogiLedSetLightingForKeyWithHidCode")]
-    [UnmanagedCallConv(CallConvs = new Type[] { typeof(System.Runtime.CompilerServices.CallConvCdecl) })]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     [return: MarshalAs(UnmanagedType.Bool)]
     public static partial bool SetLightingForKeyWithHidCode(int keyCode, int redPercentage, int greenPercentage, int bluePercentage);
 
     [LibraryImport("LogitechLedEnginesWrapper", EntryPoint = "LogiLedSetLightingForKeyWithQuartzCode")]
-    [UnmanagedCallConv(CallConvs = new Type[] { typeof(System.Runtime.CompilerServices.CallConvCdecl) })]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     [return: MarshalAs(UnmanagedType.Bool)]
     public static partial bool SetLightingForKeyWithQuartzCode(int keyCode, int redPercentage, int greenPercentage, int bluePercentage);
 
     [LibraryImport("LogitechLedEnginesWrapper", EntryPoint = "LogiLedSetLightingForKeyWithKeyName")]
-    [UnmanagedCallConv(CallConvs = new Type[] { typeof(System.Runtime.CompilerServices.CallConvCdecl) })]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     [return: MarshalAs(UnmanagedType.Bool)]
     public static partial bool SetLightingForKeyWithKeyName(KeyNames keyCode, int redPercentage, int greenPercentage, int bluePercentage);
 
     [LibraryImport("LogitechLedEnginesWrapper", EntryPoint = "LogiLedSaveLightingForKey")]
-    [UnmanagedCallConv(CallConvs = new Type[] { typeof(System.Runtime.CompilerServices.CallConvCdecl) })]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     [return: MarshalAs(UnmanagedType.Bool)]
     public static partial bool SaveLightingForKey(KeyNames keyName);
 
     [LibraryImport("LogitechLedEnginesWrapper", EntryPoint = "LogiLedRestoreLightingForKey")]
-    [UnmanagedCallConv(CallConvs = new Type[] { typeof(System.Runtime.CompilerServices.CallConvCdecl) })]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     [return: MarshalAs(UnmanagedType.Bool)]
     public static partial bool RestoreLightingForKey(KeyNames keyName);
 
     [LibraryImport("LogitechLedEnginesWrapper", EntryPoint = "LogiLedFlashSingleKey")]
-    [UnmanagedCallConv(CallConvs = new Type[] { typeof(System.Runtime.CompilerServices.CallConvCdecl) })]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     [return: MarshalAs(UnmanagedType.Bool)]
     public static partial bool FlashSingleKey(KeyNames keyName, int redPercentage, int greenPercentage, int bluePercentage, int msDuration, int msInterval);
 
     [LibraryImport("LogitechLedEnginesWrapper", EntryPoint = "LogiLedPulseSingleKey")]
-    [UnmanagedCallConv(CallConvs = new Type[] { typeof(System.Runtime.CompilerServices.CallConvCdecl) })]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     [return: MarshalAs(UnmanagedType.Bool)]
     public static partial bool PulseSingleKey(KeyNames keyName, int startRedPercentage, int startGreenPercentage, int startBluePercentage, int finishRedPercentage, int finishGreenPercentage, int finishBluePercentage, int msDuration, [MarshalAs(UnmanagedType.Bool)] bool isInfinite);
 
     [LibraryImport("LogitechLedEnginesWrapper", EntryPoint = "LogiLedStopEffectsOnKey")]
-    [UnmanagedCallConv(CallConvs = new Type[] { typeof(System.Runtime.CompilerServices.CallConvCdecl) })]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     [return: MarshalAs(UnmanagedType.Bool)]
     public static partial bool StopEffectsOnKey(KeyNames keyName);
 
     [LibraryImport("LogitechLedEnginesWrapper", EntryPoint = "LogiLedSetLightingForTargetZone")]
-    [UnmanagedCallConv(CallConvs = new Type[] { typeof(System.Runtime.CompilerServices.CallConvCdecl) })]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     [return: MarshalAs(UnmanagedType.Bool)]
     public static partial bool SetLightingForTargetZone(DeviceTypes deviceType, int zone, int redPercentage, int greenPercentage, int bluePercentage);
 
     [LibraryImport("LogitechLedEnginesWrapper", EntryPoint = "LogiLedShutdown")]
-    [UnmanagedCallConv(CallConvs = new Type[] { typeof(System.Runtime.CompilerServices.CallConvCdecl) })]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     public static partial void Shutdown();
 
     // Custom Overloads.

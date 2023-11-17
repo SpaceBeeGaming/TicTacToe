@@ -6,7 +6,7 @@ public partial class GameBoard
 {
     #region Private Fields
     private (int x, int y) _boardOffset;
-    private readonly string _grid =
+    private const string Grid =
         """
         ┌───┬───┬───┐
         │   │   │   │
@@ -16,8 +16,8 @@ public partial class GameBoard
         │   │   │   │
         └───┴───┴───┘
         """;
-    private readonly List<Box> _boxes;
-    private readonly List<Line> _lines;
+    private readonly List<Box> boxes;
+    private readonly List<Line> lines;
     #endregion
 
     public GameBoard()
@@ -32,31 +32,28 @@ public partial class GameBoard
         Box _box8 = new(6, 5);
         Box _box9 = new(10, 5);
 
-        _boxes = new List<Box>()
-        {
-            _box1, _box2, _box3, _box4, _box5, _box6, _box7, _box8, _box9
-        };
+        boxes = [_box1, _box2, _box3, _box4, _box5, _box6, _box7, _box8, _box9];
 
-        _lines = new List<Line>()
-        {
-            new Line(_box1, _box2, _box3), // Row 1
-            new Line(_box4, _box5, _box6), // Row 2
-            new Line(_box7, _box8, _box9), // Row 3
+        lines =
+        [
+            new(_box1, _box2, _box3), // Row 1
+            new(_box4, _box5, _box6), // Row 2
+            new(_box7, _box8, _box9), // Row 3
 
-            new Line(_box1, _box4, _box7), // Col 1
-            new Line(_box2, _box5, _box8), // Col 2
-            new Line(_box3, _box6, _box9), // Col 3
+            new(_box1, _box4, _box7), // Col 1
+            new(_box2, _box5, _box8), // Col 2
+            new(_box3, _box6, _box9), // Col 3
 
-            new Line(_box1, _box5, _box9), // Diag -
-            new Line(_box3, _box5, _box7), // Diag +
-        };
+            new(_box1, _box5, _box9), // Diagonal -
+            new(_box3, _box5, _box7), // Diagonal +
+        ];
     }
 
     /// <summary>
     /// Gets all of the empty boxes on the board.
     /// </summary>
     /// <returns>All of the empty boxes.</returns>
-    public IEnumerable<Box> GetEmptyBoxes() => _boxes.Where(box => box.IsOccupied is false);
+    public IEnumerable<Box> GetEmptyBoxes() => boxes.Where(box => box.IsOccupied is false);
 
     /// <summary>
     /// Draws the game board.
@@ -65,7 +62,7 @@ public partial class GameBoard
     {
         // Draw the game board and save the cursor offset.
         _boardOffset = System.Console.GetCursorPosition();
-        System.Console.WriteLine(_grid);
+        System.Console.WriteLine(Grid);
     }
 
     /// <summary>
@@ -109,7 +106,7 @@ public partial class GameBoard
     public (bool gameOver, Players winner) CheckForWinner()
     {
         // Iterate over all the rows, columns and diagonals.
-        foreach (var line in _lines)
+        foreach (var line in lines)
         {
             // Check if the line is all 'X'.
             if (line.Boxes.All(box => box.Player == Players.X) is true)
@@ -152,29 +149,29 @@ public partial class GameBoard
 
     public Box GetBox(Boxes box) => box switch
     {
-        Boxes.B1 => _boxes[0], // Box 1
-        Boxes.B2 => _boxes[1], // Box 2
-        Boxes.B3 => _boxes[2], // Box 3
-        Boxes.B4 => _boxes[3], // Box 4
-        Boxes.B5 => _boxes[4], // Box 5
-        Boxes.B6 => _boxes[5], // Box 6
-        Boxes.B7 => _boxes[6], // Box 7
-        Boxes.B8 => _boxes[7], // Box 8
-        Boxes.B9 => _boxes[8], // Box 9
+        Boxes.B1 => boxes[0], // Box 1
+        Boxes.B2 => boxes[1], // Box 2
+        Boxes.B3 => boxes[2], // Box 3
+        Boxes.B4 => boxes[3], // Box 4
+        Boxes.B5 => boxes[4], // Box 5
+        Boxes.B6 => boxes[5], // Box 6
+        Boxes.B7 => boxes[6], // Box 7
+        Boxes.B8 => boxes[7], // Box 8
+        Boxes.B9 => boxes[8], // Box 9
         _ => throw new ArgumentException("Cannot convert into a Box.", nameof(box)), // Error
     };
 
     public Boxes GetBox(Box box)
     {
-        return box == _boxes[0] ? Boxes.B1 // Box 1
-             : box == _boxes[1] ? Boxes.B2 // Box 2
-             : box == _boxes[2] ? Boxes.B3 // Box 3
-             : box == _boxes[3] ? Boxes.B4 // Box 4
-             : box == _boxes[4] ? Boxes.B5 // Box 5
-             : box == _boxes[5] ? Boxes.B6 // Box 6
-             : box == _boxes[6] ? Boxes.B7 // Box 7
-             : box == _boxes[7] ? Boxes.B8 // Box 8
-             : box == _boxes[8] ? Boxes.B9 // Box 9
+        return box == boxes[0] ? Boxes.B1 // Box 1
+             : box == boxes[1] ? Boxes.B2 // Box 2
+             : box == boxes[2] ? Boxes.B3 // Box 3
+             : box == boxes[3] ? Boxes.B4 // Box 4
+             : box == boxes[4] ? Boxes.B5 // Box 5
+             : box == boxes[5] ? Boxes.B6 // Box 6
+             : box == boxes[6] ? Boxes.B7 // Box 7
+             : box == boxes[7] ? Boxes.B8 // Box 8
+             : box == boxes[8] ? Boxes.B9 // Box 9
              : throw new ArgumentException("Unknown Box.", nameof(box)); // Error
     }
 
@@ -200,10 +197,10 @@ public partial class GameBoard
 
     public IList<Line> GetLines(Players player, int numHits, bool shortCircuit = false)
     {
-        List<Line> lines = new();
+        List<Line> lines = [];
 
         // Iterate over all the lines in the grid.
-        foreach (Line line in _lines)
+        foreach (Line line in this.lines)
         {
             // Skip if it is already full and we're not asking for complete rows.
             if (line.IsFull && numHits != line.Boxes.Count)

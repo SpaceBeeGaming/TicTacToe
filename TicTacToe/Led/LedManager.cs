@@ -72,28 +72,28 @@ internal static class LedManager
     {
         Players player = EnumConverters.GameOverTypeToPlayersConverter(winner);
 
-        Line? gameoverLine = board.GetLines(player, 3, true).FirstOrDefault();
-        if (gameoverLine is not null)
+        Line? gameOverLine = board.GetLines(player, 3, true).FirstOrDefault();
+        if (gameOverLine is not null)
         {
-            List<KeyNames> keys = new();
-            foreach (Box box in gameoverLine.Boxes)
+            List<KeyNames> keys = [];
+            foreach (Box box in gameOverLine.Boxes)
             {
                 keys.Add(board.GetKeyNameFromBox(box));
             }
 
-            Task.Run(() => FlashKeysAsync(keys, BoxStateToColorConverter.GetColorForBox(gameoverLine.Boxes.First()), 500));
+            Task.Run(() => FlashKeysAsync(keys, BoxStateToColorConverter.GetColorForBox(gameOverLine.Boxes.First()), 500));
         }
     }
 
-    private static void FlashKey(KeyNames keyname, Color color, int intervalMS = 500) =>
-        LogiLED.FlashSingleKey(keyname, color, LogiLED.LOGI_LED_DURATION_INFINITE, intervalMS);
+    private static void FlashKey(KeyNames keyName, Color color, int intervalMS = 500) =>
+        LogiLED.FlashSingleKey(keyName, color, LogiLED.LOGI_LED_DURATION_INFINITE, intervalMS);
 
     private static async Task FlashKeysAsync(IEnumerable<KeyNames> keys, Color color, int offsetMS = 0, int intervalMS = 500)
     {
         await Task.Delay(offsetMS);
-        foreach (KeyNames keyname in keys)
+        foreach (KeyNames keyName in keys)
         {
-            FlashKey(keyname, color, intervalMS);
+            FlashKey(keyName, color, intervalMS);
         }
     }
 }

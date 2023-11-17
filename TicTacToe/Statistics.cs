@@ -2,8 +2,8 @@
 
 public sealed class Statistics
 {
-    private readonly List<int> _turnCounts = new();
-    private readonly List<long> _gameDurationsMS = new();
+    private readonly List<int> turnCounts = [];
+    private readonly List<long> gameDurationsMS = [];
     private int _xStarts;
     public int Wins { get; private set; }
     public int Losses { get; private set; }
@@ -13,12 +13,12 @@ public sealed class Statistics
     public double LossPercent => Losses * 100d / GamesPlayed;
     public double TiePercent => Ties * 100d / GamesPlayed;
     public double XStartPercent => _xStarts * 100d / GamesPlayed;
-    public int AverageTurnCount => (int)Math.Round(_turnCounts.Average(), MidpointRounding.AwayFromZero);
-    public TimeSpan AverageGameDuration => TimeSpan.FromMilliseconds(_gameDurationsMS.Average());
-    public TimeSpan TotalGameDuration => TimeSpan.FromMilliseconds(_gameDurationsMS.Sum());
+    public int AverageTurnCount => (int)Math.Round(turnCounts.Average(), MidpointRounding.AwayFromZero);
+    public TimeSpan AverageGameDuration => TimeSpan.FromMilliseconds(gameDurationsMS.Average());
+    public TimeSpan TotalGameDuration => TimeSpan.FromMilliseconds(gameDurationsMS.Sum());
 
-    public void AddTurnCount(int turnCount) => _turnCounts.Add(turnCount);
-    public void AddGameDuration(long gameDurationMS) => _gameDurationsMS.Add(gameDurationMS);
+    public void AddTurnCount(int turnCount) => turnCounts.Add(turnCount);
+    public void AddGameDuration(long gameDurationMS) => gameDurationsMS.Add(gameDurationMS);
 
     public void AddXStart() => _xStarts++;
 

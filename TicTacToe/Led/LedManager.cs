@@ -27,13 +27,13 @@ internal static class LedManager
         switch (gameOverType)
         {
             case GameOverType.Tie:
-                FlashKey(KeyNames.NUM_ENTER, Color.White);
+                FlashKey(KeyNames.NumEnter, Color.White);
                 break;
             case GameOverType.X:
-                FlashKey(KeyNames.NUM_ENTER, Color.Blue);
+                FlashKey(KeyNames.NumEnter, Color.Blue);
                 break;
             case GameOverType.O:
-                FlashKey(KeyNames.NUM_ENTER, Color.Red);
+                FlashKey(KeyNames.NumEnter, Color.Red);
                 break;
             default:
                 throw new InvalidOperationException();

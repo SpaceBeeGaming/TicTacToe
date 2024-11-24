@@ -50,35 +50,29 @@ public partial class GameBoard
     }
 
     /// <summary>
-    /// Gets all of the empty boxes on the board.
+    /// Gets the collection of empty boxes on the game board.
     /// </summary>
-    /// <returns>All of the empty boxes.</returns>
+    /// <returns>The collection of empty boxes.</returns>
     public IEnumerable<Box> GetEmptyBoxes() => boxes.Where(box => box.IsOccupied is false);
 
     /// <summary>
-    /// Draws the game board.
+    /// Draws the game board on the console and saves the cursor offset.
     /// </summary>
     public void DrawBoard()
     {
-        // Draw the game board and save the cursor offset.
         _boardOffset = System.Console.GetCursorPosition();
         System.Console.WriteLine(Grid);
     }
 
-    /// <summary>
-    /// Wrapper for <see cref="DrawPlayer(Box, Players)"/> that doesn't require a reference to the actual <see cref="Box"/>.
-    /// </summary>
-    /// <param name="box">The instance of the <see cref="Boxes"/> to target.</param>
-    /// <param name="player">The instance of <see cref="Players"/> to draw.</param>
-    /// <returns></returns>
+    /// <inheritdoc cref="DrawPlayer(Box, Players)"/>
     public bool DrawPlayer(Boxes box, Players player) => DrawPlayer(GetBox(box), player);
 
     /// <summary>
-    /// Draws the specific <paramref name="player"/> to the specific <paramref name="box"/>.
+    /// Draws the player symbol on the specified box if it is empty.
     /// </summary>
-    /// <param name="box">The <see cref="Box"/> to target.</param>
-    /// <param name="player">The instance of <see cref="Players"/> to draw.</param>
-    /// <returns></returns>
+    /// <param name="box">The box to draw the player symbol on.</param>
+    /// <param name="player">The player symbol to draw.</param>
+    /// <returns>True if the player symbol was successfully drawn, false otherwise.</returns>
     public bool DrawPlayer(Box box, Players player)
     {
         // Check if the box is empty.
@@ -100,9 +94,9 @@ public partial class GameBoard
     }
 
     /// <summary>
-    /// Determines if the game has ended and if there is a winner.
+    /// Checks if there is a winner on the game board.
     /// </summary>
-    /// <returns></returns>
+    /// <returns>A tuple indicating whether the game is over and the winner player.</returns>
     public (bool gameOver, Players winner) CheckForWinner()
     {
         // Iterate over all the rows, columns and diagonals.
@@ -132,19 +126,22 @@ public partial class GameBoard
     }
 
     /// <summary>
-    /// Gets the list of lines where the opposing player to <paramref name="player"/> is one away from winning.
+    /// Gets the list of lines where the opposing player to <paramref name="player"/> is one move away from winning.
     /// </summary>
     /// <param name="player">
-    /// <para>
-    /// The instance of <see cref="Players"/> reference to.
-    /// </para>
-    /// <remark>
+    /// The player for whom to find the dangerous lines.
+    /// <remarks>
     /// If <see cref="Players.X"/> is used as input, this will return the lines where <see cref="Players.O"/> is about to win.
-    /// </remark>
+    /// </remarks>
     /// </param>
     /// <returns>A list of dangerous <see cref="Line"/>s.</returns>
     public IList<Line> GetDangerousLines(Players player) => GetLines(Game.GetOpposingPlayer(player), 2);
 
+    /// <summary>
+    /// Gets the winning line for the specified player.
+    /// </summary>
+    /// <param name="player">The player to check for.</param>
+    /// <returns>The winning line if found, otherwise null.</returns>
     public Line? GetWinningLine(Players player) => GetLines(player, 2, true).FirstOrDefault();
 
     public Box GetBox(Boxes box) => box switch

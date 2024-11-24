@@ -86,7 +86,7 @@ public partial class GameBoard
         LedManager.SetBox(box, this);
 
         // Draw the symbol on the console.
-        var oldPos = Console.SetCursorPosition(_boardOffset, box.Location);
+        (int Left, int Top) oldPos = Console.SetCursorPosition(_boardOffset, box.Location);
         System.Console.Write(player);
         Console.SetCursorPosition(oldPos);
 
@@ -100,15 +100,15 @@ public partial class GameBoard
     public (bool gameOver, Players winner) CheckForWinner()
     {
         // Iterate over all the rows, columns and diagonals.
-        foreach (var line in lines)
+        foreach (Line line in lines)
         {
             // Check if the line is all 'X'.
-            if (line.Boxes.All(box => box.Player == Players.X) is true)
+            if (line.Boxes.All(box => box.Player == Players.X))
             {
                 return (true, Players.X);
             }
             // Check if the line is all 'O'.
-            else if (line.Boxes.All(box => box.Player == Players.O) is true)
+            else if (line.Boxes.All(box => box.Player == Players.O))
             {
                 return (true, Players.O);
             }

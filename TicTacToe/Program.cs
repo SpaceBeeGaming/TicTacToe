@@ -20,7 +20,7 @@ internal static class Program
         // Ask about alternate input method.
         Console.WriteLine("Press: <Backspace> to enable number row as input.");
         Console.WriteLine("This will disable numpad.");
-        var key = Console.ReadKey(true);
+        ConsoleKeyInfo key = Console.ReadKey(true);
         if (key.Key is ConsoleKey.Backspace)
         {
             UseNumRow = true;
@@ -56,7 +56,7 @@ internal static class Program
         Console.WriteLine(Resources.PlayAgainPrompt);
 
         // Determine if the player wants to play again.
-        var key = Console.ReadKey(true).Key;
+        ConsoleKey key = Console.ReadKey(true).Key;
         LedManager.StopEffects();
         return key is ConsoleKey.Enter;
     }

@@ -193,10 +193,10 @@ public sealed class Game(Statistics statistics, Stopwatch stopwatch)
                 }
 
                 // Group the boxes into a dictionary by the number of times they appear.
-                Dictionary<Box, int> bestBoxes = priorityBoxes.GroupBy(x => x).ToDictionary(x => x.Key, x => x.Count());
+                Dictionary<Box, int> bestBoxes = priorityBoxes.GroupBy(static x => x).ToDictionary(static x => x.Key, static x => x.Count());
 
                 // Select the box which is contained in largest number of lines.
-                idealBox = bestBoxes.MaxBy(x => x.Value).Key;
+                idealBox = bestBoxes.MaxBy(static x => x.Value).Key;
             }
         }
 

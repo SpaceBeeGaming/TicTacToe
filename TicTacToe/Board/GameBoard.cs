@@ -54,6 +54,7 @@ public partial class GameBoard
     /// </summary>
     /// <returns>The collection of empty boxes.</returns>
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0100:Remove redundant equality", Justification = "More readable.")]
+    public IEnumerable<Box> GetEmptyBoxes() => boxes.Where(static box => box.IsOccupied is false);
 
     /// <summary>
     /// Draws the game board on the console and saves the cursor offset.
@@ -103,12 +104,12 @@ public partial class GameBoard
         foreach (Line line in lines)
         {
             // Check if the line is all 'X'.
-            if (line.Boxes.All(box => box.Player == Players.X))
+            if (line.Boxes.All(static box => box.Player == Players.X))
             {
                 return (true, Players.X);
             }
             // Check if the line is all 'O'.
-            else if (line.Boxes.All(box => box.Player == Players.O))
+            else if (line.Boxes.All(static box => box.Player == Players.O))
             {
                 return (true, Players.O);
             }

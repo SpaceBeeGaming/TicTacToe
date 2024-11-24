@@ -53,7 +53,7 @@ public partial class GameBoard
     /// Gets the collection of empty boxes on the game board.
     /// </summary>
     /// <returns>The collection of empty boxes.</returns>
-    public IEnumerable<Box> GetEmptyBoxes() => boxes.Where(box => box.IsOccupied is false);
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0100:Remove redundant equality", Justification = "More readable.")]
 
     /// <summary>
     /// Draws the game board on the console and saves the cursor offset.

@@ -120,6 +120,7 @@ public sealed class Game(Statistics statistics, Stopwatch stopwatch)
         bool PlayerIsWinner() => (Winner is GameOverType.X && HumanPlayer is Players.X) || (Winner is GameOverType.O && HumanPlayer is Players.O);
     }
 
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0100:Remove redundant equality", Justification = "More Readable")]
     private void PlayerTurn(Players player)
     {
         bool result;

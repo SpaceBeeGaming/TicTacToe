@@ -116,14 +116,11 @@ public partial class GameBoard
         }
 
         // Check if the grid is full.
-        if (GetEmptyBoxes().Any() is false)
+        return GetEmptyBoxes().Any() switch
         {
-            // We have a tie since the grid is full and we have no winners.
-            return (true, Players.Null);
-        }
-
-        // Returns when there are empty boxes and no winners.
-        return (false, Players.Null);
+            false => (true, Players.Null), // We have a tie since the grid is full and we have no winners.
+            _ => (false, Players.Null), // Returns when there are empty boxes and no winners.
+        };
     }
 
     /// <summary>

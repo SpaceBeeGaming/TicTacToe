@@ -16,16 +16,10 @@ internal static class LedManager
     }
 
     [Conditional("WINDOWS")]
-    public static void RestoreLighting()
-    {
-        LogiLED.RestoreLighting();
-    }
+    public static void RestoreLighting() => LogiLED.RestoreLighting();
 
     [Conditional("WINDOWS")]
-    public static void SetDark()
-    {
-        LogiLED.SetLighting(0, 0, 0);
-    }
+    public static void SetDark() => LogiLED.SetLighting(0, 0, 0);
 
     [Conditional("WINDOWS")]
     public static void FlashEnter(GameOverType gameOverType)
@@ -33,13 +27,13 @@ internal static class LedManager
         switch (gameOverType)
         {
             case GameOverType.Tie:
-                FlashKey(KeyNames.NUM_ENTER, Color.White);
+                FlashKey(KeyNames.NumEnter, Color.White);
                 break;
             case GameOverType.X:
-                FlashKey(KeyNames.NUM_ENTER, Color.Blue);
+                FlashKey(KeyNames.NumEnter, Color.Blue);
                 break;
             case GameOverType.O:
-                FlashKey(KeyNames.NUM_ENTER, Color.Red);
+                FlashKey(KeyNames.NumEnter, Color.Red);
                 break;
             default:
                 throw new InvalidOperationException();
@@ -47,16 +41,12 @@ internal static class LedManager
     }
 
     [Conditional("WINDOWS")]
-    public static void StopEffects()
-    {
-        LogiLED.StopEffects();
-
-    }
+    public static void StopEffects() => LogiLED.StopEffects();
 
     [Conditional("WINDOWS")]
     public static void SetBox(Box box, GameBoard board)
     {
-        var color = BoxStateToColorConverter.GetColorForBox(box);
+        Color color = BoxStateToColorConverter.GetColorForBox(box);
         LogiLED.SetLightingForKeyWithKeyName(board.GetKeyNameFromBox(box), color);
     }
 

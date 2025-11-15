@@ -61,7 +61,7 @@ public sealed class Game(Statistics statistics, Stopwatch stopwatch)
         do
         {
             // Get the current progress of the game.
-            var status = board.CheckForWinner();
+            (bool gameOver, Players winner) status = board.CheckForWinner();
 
             // If the game has ended we set the result and break.
             if (status.gameOver)
@@ -120,6 +120,7 @@ public sealed class Game(Statistics statistics, Stopwatch stopwatch)
         bool PlayerIsWinner() => (Winner is GameOverType.X && HumanPlayer is Players.X) || (Winner is GameOverType.O && HumanPlayer is Players.O);
     }
 
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0100:Remove redundant equality", Justification = "More Readable")]
     private void PlayerTurn(Players player)
     {
         bool result;
@@ -166,7 +167,7 @@ public sealed class Game(Statistics statistics, Stopwatch stopwatch)
         Box? idealBox = null;
 
         // Check if we have a line which is one away from a win.
-        var winningLine = board.GetWinningLine(player);
+        Line? winningLine = board.GetWinningLine(player);
         if (winningLine is not null)
         {
             // Set the missing box as the ideal target.
@@ -178,24 +179,24 @@ public sealed class Game(Statistics statistics, Stopwatch stopwatch)
         if (idealBox is null)
         {
             // Check if we have any lines where the opponent is one away from winning.
-            var dangerousLines = board.GetDangerousLines(player);
+            IList<Line> dangerousLines = board.GetDangerousLines(player);
 
             if (dangerousLines.Count is not 0)
             {
                 List<Box> priorityBoxes = [];
 
                 // Iterate over all the lines founds to be dangerous.
-                foreach (var line in dangerousLines)
+                foreach (Line line in dangerousLines)
                 {
                     // Add the empty boxes from these dangerous lines into a list.
                     priorityBoxes.AddRange(line.GetEmptyBoxes());
                 }
 
                 // Group the boxes into a dictionary by the number of times they appear.
-                var bestBoxes = priorityBoxes.GroupBy(x => x).ToDictionary(x => x.Key, x => x.Count());
+                Dictionary<Box, int> bestBoxes = priorityBoxes.GroupBy(static x => x).ToDictionary(static x => x.Key, static x => x.Count());
 
                 // Select the box which is contained in largest number of lines.
-                idealBox = bestBoxes.MaxBy(x => x.Value).Key;
+                idealBox = bestBoxes.MaxBy(static x => x.Value).Key;
             }
         }
 
@@ -204,7 +205,7 @@ public sealed class Game(Statistics statistics, Stopwatch stopwatch)
         if (idealBox is null)
         {
             // Get a list of all empty boxes.
-            var boxes = board.GetEmptyBoxes().ToList();
+            List<Box> boxes = board.GetEmptyBoxes().ToList();
 
             // Select the target randomly.
             idealBox = boxes[Random.Shared.Next(boxes.Count)];
